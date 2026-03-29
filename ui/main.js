@@ -4,7 +4,7 @@ console.log('[AlgoTrainer] main.js loaded');
 
 window.MonacoEnvironment = {
     getWorkerUrl: function (workerId, label) {
-        return 'vs/editor/editor.worker.js';
+        return 'vs/assets/editor.worker.js';
     }
 };
 
