@@ -22,7 +22,7 @@ Desktop application for practicing Python coding problems (similar to LeetCode).
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/algo-trainer.git
+git clone https://github.com/nidara-duo/algo-trainer.git
 cd algo-trainer
 
 # Install dependencies
@@ -105,31 +105,7 @@ Expected output: **31/31 passed (100.0%)**
 | 6 | ZigZag Conversion | Medium | 37 |
 | 49 | Group Anagrams | Medium | 41 |
 | 56 | Merge Intervals | Medium | 42 |
-| 88 | Merge Sorted Array | Easy | 30 |
-| 104 | Maximum Depth of Binary Tree | Easy | 37 |
-| 125 | Valid Palindrome | Easy | 37 |
-| 161 | One Edit Distance | Medium | 40 |
-| 206 | Reverse Linked List | Easy | 36 |
-| 228 | Summary Ranges | Easy | 37 |
-| 238 | Product of Array Except Self | Medium | 36 |
-| 283 | Move Zeroes | Easy | 36 |
-| 356 | Line Reflection | Medium | 37 |
-| 380 | Insert Delete GetRandom O(1) | Medium | 30 |
-| 392 | Is Subsequence | Easy | 37 |
-| 443 | String Compression | Easy | 37 |
-| 652 | Find Duplicate Subtrees | Medium | 36 |
-| 658 | Find K Closest Elements | Medium | 36 |
-| 680 | Valid Palindrome II | Easy | 37 |
-| 1004 | Max Consecutive Ones III | Medium | 36 |
-| 1438 | Longest Subarray with Absolute Diff | Medium | 37 |
-| 1493 | Longest Subarray of 1's | Easy | 37 |
-| 10000 | Reconstruct Journey Path (Yandex) | Medium | 37 |
-| 10001 | Remove Consecutive Spaces (Yandex) | Easy | 36 |
-| 10002 | Compress Ranges (Yandex) | Easy | 39 |
-| 10003 | Find Equivalent Subtrees (Yandex) | Medium | 35 |
-| 10005 | One Edit Distance (Yandex) | Medium | 40 |
-| 10006 | Search in Bitonic Array (Yandex) | Medium | 37 |
-| 10007 | Common Prefix of Two Permutations (Yandex) | Medium | 35 |
+
 
 ## Architecture
 
@@ -143,7 +119,6 @@ Expected output: **31/31 passed (100.0%)**
 
 - **Monaco Editor** - Python syntax highlighting, auto-indentation
 - **localStorage** - Code persistence per problem
-- **Dark theme** - Port from C++/FLTK implementation
 
 ### Performance Optimizations
 
