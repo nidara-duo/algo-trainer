@@ -1,0 +1,51 @@
+ID: 3
+TITLE: Longest Substring Without Repeating Characters
+DIFFICULTY: Medium
+MATCHMODE: exact
+FUNCTION: length_of_longest_substring
+ARGUMENTS: [{"name": "s", "type": "str"}]
+RETURN_TYPE: int
+EXAMPLES: 3
+
+CONDITION:
+<p>Given a string <code>s</code>, find the length of the <strong>longest substring</strong> without repeating characters.</p>
+
+TESTS:
+<args>"abcabcbb"</args>; <output>3</output>
+<args>"bbbbb"</args>; <output>1</output>
+<args>"pwwkew"</args>; <output>3</output>
+<args>""</args>; <output>0</output>
+<args>"au"</args>; <output>2</output>
+<args>"rHLqmggYxKR"</args>; <output>6</output>
+<args>"fWuBHOrfjPpMqOT6efq3CuXL0I"</args>; <output>13</output>
+<args>"6wJ7Yf"</args>; <output>6</output>
+<args>"7BfsZfZGXGwqb2lKezCcXqjxEG6rHK"</args>; <output>17</output>
+<args>"3OunPjf5zH"</args>; <output>10</output>
+<args>"BmUw6qtudPcI3kv3"</args>; <output>15</output>
+<args>"ZqH0V"</args>; <output>5</output>
+<args>"xhLRqxLrJ"</args>; <output>6</output>
+<args>"Ns5Suu2iI323nSI80Cve"</args>; <output>10</output>
+<args>"LlNss"</args>; <output>4</output>
+<args>"jfbbjYDLQe23W8o3ffVDy8kHNeoGOV"</args>; <output>12</output>
+<args>"mQOu0qIknxkkuF4TwsYkRTqRx9z"</args>; <output>10</output>
+<args>"PQ4SPUicTXXjlbdcaiCYcOktQe"</args>; <output>10</output>
+<args>"xuBltP43Veeyv4h79XskpqIOWb3a"</args>; <output>18</output>
+<args>"AeunwT0ZEr4RAy66zANrmuOy"</args>; <output>14</output>
+<args>"V3BwVmRnyxI63"</args>; <output>11</output>
+<args>"StB1tfacBA"</args>; <output>7</output>
+<args>"Ze0B7t3mcj0z"</args>; <output>10</output>
+<args>"xTQMeJta2gDpnJ"</args>; <output>13</output>
+<args>"30mwr8FZgDxeqVq8CJXpjO8Z"</args>; <output>14</output>
+<args>"sR2zYKxz0f0D8kIJwxwQXn"</args>; <output>9</output>
+<args>"BamfUh8VxbJIUoidCjbXH2"</args>; <output>13</output>
+<args>"Qb6Gb3vP15F8I"</args>; <output>11</output>
+<args>"ziEBOiw6rlGsgb6o6NXoEUfZMJ"</args>; <output>12</output>
+<args>"jHuu9sA4keQXxW8"</args>; <output>12</output>
+<args>"q5MKmJ2MY6cyJXmHxFvr"</args>; <output>14</output>
+<args>"NwIdBW8peJijdczTTia0j"</args>; <output>12</output>
+<args>"g5raPR0P9hpE7sv67HCImAaQH5Ls"</args>; <output>11</output>
+<args>"HdY58xdqJje6FHPpZax8pYA48mI7rv"</args>; <output>16</output>
+<args>"6ZD0F9HUjClFKd99UXrvNYMyU"</args>; <output>11</output>
+<args>"mZCrsyNYMJHySGy8zBFf5yqnn6"</args>; <output>11</output>
+<args>"effR9wiQh662eKj3KE"</args>; <output>8</output>
+<args>"jux8xNrTwYJkS82cI5QqJOdP"</args>; <output>16</output>
