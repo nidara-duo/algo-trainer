@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algo Trainer</title>
+  <link rel="stylesheet" href="ui/style.css">
+  <style>
+    @font-face {
+      font-family: 'Press Start 2P';
+      src: url('assets/PressStart2P-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    
+    <header class="app-header" id="main-header">
+      <h1>ALGO TRAINER</h1>
+    </header>
+
+    
+    <div id="problem-list-view" class="view">
+      <div class="problem-list-container">
+        
+        <div class="task-list-section">
+          
+          <div class="search-controls">
+            <input type="text" id="search-input" placeholder="Search tasks...">
+            
+            
+            <div class="dropdown-container">
+              <button class="control-btn sort-btn" id="sort-btn" title="Sort">
+                <span class="btn-icon">↕️</span>
+                <span class="btn-text">Sort</span>
+              </button>
+              <div class="dropdown-menu sort-dropdown" id="sort-dropdown">
+                <div class="dropdown-item" data-sort="default">
+                  <span class="sort-icon">🔢</span> Default (ID)
+                </div>
+                <div class="dropdown-item" data-sort="difficulty">
+                  <span class="sort-icon">📊</span> Difficulty (Easy→Hard)
+                </div>
+                <div class="dropdown-item" data-sort="difficulty-desc">
+                  <span class="sort-icon">📈</span> Difficulty (Hard→Easy)
+                </div>
+                <div class="dropdown-item" data-sort="title">
+                  <span class="sort-icon">🔤</span> Title (A-Z)
+                </div>
+              </div>
+            </div>
+            
+            
+            <div class="dropdown-container">
+              <button class="control-btn filter-btn" id="filter-btn" title="Filter">
+                <span class="btn-icon">🗂️</span>
+                <span class="btn-text">Filter</span>
+              </button>
+              <div class="dropdown-menu filter-dropdown" id="filter-dropdown">
+                <div class="filter-section">
+                  <div class="filter-section-title">Status</div>
+                  <label class="filter-option">
+                    <input type="checkbox" name="filter-status" value="solved">
+                    <span class="filter-checkbox"></span>
+                    <span class="filter-label">Solved Only</span>
+                    <span class="filter-badge solved">✓</span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" name="filter-status" value="unsolved">
+                    <span class="filter-checkbox"></span>
+                    <span class="filter-label">Unsolved Only</span>
+                    <span class="filter-badge unsolved">○</span>
+                  </label>
+                </div>
+                
+                <div class="filter-divider"></div>
+                
+                <div class="filter-section">
+                  <div class="filter-section-title">Difficulty</div>
+                  <label class="filter-option">
+                    <input type="checkbox" name="filter-diff" value="easy">
+                    <span class="filter-checkbox easy"></span>
+                    <span class="filter-label">Easy</span>
+                    <span class="filter-dot easy"></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" name="filter-diff" value="medium">
+                    <span class="filter-checkbox medium"></span>
+                    <span class="filter-label">Medium</span>
+                    <span class="filter-dot medium"></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" name="filter-diff" value="hard">
+                    <span class="filter-checkbox hard"></span>
+                    <span class="filter-label">Hard</span>
+                    <span class="filter-dot hard"></span>
+                  </label>
+                </div>
+                
+                <div class="filter-divider"></div>
+                
+                <div class="filter-section">
+                  <div class="filter-section-title">Special</div>
+                  <label class="filter-option">
+                    <input type="checkbox" name="filter" value="yandex">
+                    <span class="filter-checkbox yandex"></span>
+                    <span class="filter-label">Yandex Only</span>
+                    <span class="filter-badge yandex">Y</span>
+                  </label>
+                </div>
+                
+                <div class="filter-divider"></div>
+                
+                <div class="filter-actions">
+                  <button class="filter-clear-btn" id="filter-clear-btn">Clear All</button>
+                </div>
+              </div>
+            </div>
+            
+            
+            <button class="control-btn random-btn" id="random-btn" title="Random Problem">
+              <span class="btn-icon">🎲</span>
+              <span class="btn-text">Random</span>
+            </button>
+          </div>
+
+          
+          <div class="task-list-scroll" id="task-list-scroll">
+            
+          </div>
+        </div>
+
+        
+        <div class="analytics-panel">
+          <div class="analytics-title">YOUR PROGRESS</div>
+          
+          
+          <div class="stat-row">
+            <span class="stat-label">Total Submissions</span>
+            <span class="stat-value" id="stat-total-submissions">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Problems Solved</span>
+            <span class="stat-value" id="stat-problems-solved">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Time Spent</span>
+            <span class="stat-value" id="stat-time-spent">0m</span>
+          </div>
+          
+          
+          <div class="stat-row">
+            <span class="stat-label">Easy Solved</span>
+            <span class="stat-value" id="stat-easy">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Medium Solved</span>
+            <span class="stat-value" id="stat-medium">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Hard Solved</span>
+            <span class="stat-value" id="stat-hard">0</span>
+          </div>
+
+          
+          <button id="reset-stats-btn" class="reset-stats-btn" title="Reset all statistics">
+            🗑️ Reset Statistics
+          </button>
+
+          <div class="solved-problems-section">
+            <h3 class="solved-section-title">SOLVED PROBLEMS</h3>
+            <div id="solved-problems-list" class="solved-problems-list">
+              <div class="loading">No solved problems yet</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="loading-msg" class="loading">Loading problems...</div>
+      <div id="error-msg" class="error" style="display: none;"></div>
+    </div>
+
+    
+    <div id="workspace-view" class="view" style="display: none;">
+      <div class="workspace-container">
+        
+        <div class="problem-description" id="problem-description">
+          
+          <button id="back-btn" class="back-btn">Back</button>
+
+          <div class="problem-header">
+            <div id="problem-accent" class="problem-accent easy"></div>
+            <h2 id="problem-title">Problem Title</h2>
+          </div>
+          <div id="problem-condition" class="condition-content">
+          </div>
+          <button id="author-solution-btn" class="author-solution-btn" disabled>Авторское решение</button>
+        </div>
+
+        
+        <div class="resize-handle" id="resize-handle"></div>
+
+        
+        <div class="editor-section" id="editor-section">
+          
+          <div class="timer-container">
+            <span id="timer">10:00</span>
+          </div>
+          
+          
+          <div id="monaco-editor" class="monaco-editor"></div>
+          
+          
+          <div class="editor-actions">
+            <button id="run-btn" class="run-btn">Run Code (Ctrl+Enter)</button>
+            <button id="copy-btn" class="copy-btn" onclick="copyCodeToClipboard()">Copy</button>
+            <button id="reset-btn" class="reset-btn" onclick="resetCodeToTemplate()">Reset</button>
+          </div>
+          
+          
+          <div id="test-results" class="test-results" style="display: none;">
+            <div class="results-header">
+              <h3>Test Results</h3>
+              <span id="results-summary" class="results-summary"></span>
+            </div>
+            <div id="test-results-list" class="test-results-list">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div id="confirm-modal" class="modal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modal-title">Confirm Exit</h3>
+        </div>
+        <div class="modal-body">
+          <p id="modal-message">Do you really want to exit? Your code will be saved, but you will lose the current workspace view.</p>
+        </div>
+        <div class="modal-footer">
+          <button id="modal-cancel-btn" class="modal-btn modal-btn-cancel">Cancel</button>
+          <button id="modal-confirm-btn" class="modal-btn modal-btn-confirm">Exit</button>
+        </div>
+      </div>
+    </div>
+
+    
+    <div id="reset-stats-modal" class="modal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content reset-stats-modal-content">
+        <div class="modal-header">
+          <h3>🗑️ Reset Statistics</h3>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to reset <strong>ALL statistics</strong>?</p>
+          <p class="warning-text">⚠️ This action cannot be undone. All submission history, time tracking, and solved problems will be permanently deleted.</p>
+        </div>
+        <div class="modal-footer">
+          <button id="reset-stats-cancel-btn" class="modal-btn modal-btn-cancel">Cancel</button>
+          <button id="reset-stats-confirm-btn" class="modal-btn modal-btn-danger">Reset All</button>
+        </div>
+      </div>
+    </div>
+
+    
+    <div id="time-up-modal" class="modal time-up-modal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content time-up-content">
+        <div class="time-up-icon">⏰</div>
+        <h2 class="time-up-title">Time's Up!</h2>
+        <p id="time-up-message" class="time-up-message"></p>
+        <button id="time-up-close-btn" class="time-up-btn">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <script src="vs/loader.js"></script>
+
+  <script>
+    // Debug: Log when page loads
+    window.addEventListener('load', function() {
+      console.log('[AlgoTrainer] Page loaded');
+    });
+  </script>
+
+  <script src="ui/editor_config.js"></script>
+  <script src="ui/main.js"></script>
+</body>
+</html>

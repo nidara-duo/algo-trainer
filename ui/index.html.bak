@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algo Trainer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1>Algo Trainer</h1>
+      <button id="back-btn" class="back-btn" style="display: none;">← Back to Problems</button>
+    </header>
+
+    <!-- Problem List View -->
+    <div id="problem-list-view" class="view">
+      <div class="problem-list-container">
+        <h2>Available Problems</h2>
+        <table class="problem-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Difficulty</th>
+            </tr>
+          </thead>
+          <tbody id="problem-table-body">
+            <!-- Problems will be inserted here -->
+          </tbody>
+        </table>
+        <div id="loading-msg" class="loading">Loading problems...</div>
+        <div id="error-msg" class="error" style="display: none;"></div>
+      </div>
+    </div>
+
+    <!-- Workspace View -->
+    <div id="workspace-view" class="view" style="display: none;">
+      <div class="workspace-container">
+        <!-- Left: Problem Description -->
+        <div class="problem-description">
+          <div class="problem-header">
+            <h2 id="problem-title">Problem Title</h2>
+            <span id="problem-difficulty" class="difficulty-badge">Easy</span>
+          </div>
+          <div id="problem-condition" class="condition-content">
+            <!-- HTML condition will be inserted here -->
+          </div>
+        </div>
+
+        <!-- Right: Editor and Results -->
+        <div class="editor-section">
+          <div id="monaco-editor" class="monaco-editor"></div>
+          
+          <div class="editor-actions">
+            <button id="run-btn" class="run-btn">Run Tests (Ctrl+Enter)</button>
+          </div>
+
+          <div id="test-results" class="test-results" style="display: none;">
+            <div class="results-header">
+              <h3>Test Results</h3>
+              <span id="results-summary" class="results-summary"></span>
+            </div>
+            <div id="test-results-list" class="test-results-list">
+              <!-- Test results will be inserted here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Monaco Editor Loader -->
+  <script src="../vs/loader.js"></script>
+  
+  <!-- Editor Configuration -->
+  <script src="editor_config.js"></script>
+  
+  <!-- Main Application Logic -->
+  <script src="main.js"></script>
+</body>
+</html>
