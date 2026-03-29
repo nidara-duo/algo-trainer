@@ -34,7 +34,7 @@ def main():
 
     window.events.loaded += on_loaded
 
-    webview.start(debug=True)
+    webview.start()
 
 
 if __name__ == '__main__':
