@@ -1100,15 +1100,15 @@ function showAuthorSolutionConfirmation(solution) {
     <div class="modal-overlay"></div>
     <div class="modal-content author-solution-confirm-content">
       <div class="modal-header">
-        <h3>⚠️ Заменить код?</h3>
+        <h3>⚠️ Replace Code?</h3>
       </div>
       <div class="modal-body">
-        <p>Ваш текущий код будет <strong>полностью заменён</strong> на авторское решение.</p>
-        <p class="warning-text">Это действие нельзя отменить. Убедитесь, что вы сохранили свой код, если он важен.</p>
+        <p>Your current code will be <strong>completely replaced</strong> with the author's solution.</p>
+        <p class="warning-text">This action cannot be undone. Make sure you have saved your code if it is important.</p>
       </div>
       <div class="modal-footer">
-        <button id="author-solution-cancel-btn" class="modal-btn modal-btn-cancel">Отмена</button>
-        <button id="author-solution-replace-btn" class="modal-btn modal-btn-confirm">Заменить код</button>
+        <button id="author-solution-cancel-btn" class="modal-btn modal-btn-cancel">Cancel</button>
+        <button id="author-solution-replace-btn" class="modal-btn modal-btn-confirm">Replace Code</button>
       </div>
     </div>
   `;
@@ -1231,13 +1231,13 @@ function showAuthorSolutionModal(solution) {
     <div class="modal-overlay"></div>
     <div class="modal-content author-solution-modal-content">
       <div class="modal-header">
-        <h3>Авторское решение</h3>
+        <h3>Editorial Solution</h3>
       </div>
       <div class="modal-body">
         <pre class="author-solution-code">${escapeHtml(solution)}</pre>
       </div>
       <div class="modal-footer">
-        <button id="author-solution-close-btn" class="modal-btn modal-btn-confirm">Закрыть</button>
+        <button id="author-solution-close-btn" class="modal-btn modal-btn-confirm">Close</button>
       </div>
     </div>
   `;
