@@ -7,7 +7,7 @@ Desktop application for practicing Python coding problems (similar to LeetCode).
 
 ## Features
 
-- **31 coding problems** with 1155+ test cases
+- **32 coding problems** with 1185+ test cases
 - **Monaco Editor** - the same editor that powers VS Code
 - **Automated test generation** from author solutions
 - **100% test coverage** - all author solutions verified
@@ -57,14 +57,14 @@ algo-trainer/
 ├── vs/                     # Monaco Editor (minimized)
 │
 ├── data/
-│   ├── raw_problems/       # 31 problem files
+│   ├── raw_problems/       # 7 problem files
 │   ├── solutions/          # Author solutions
 │   └── problems_db.json    # Cached problems
 │
 ├── test_generator/
 │   ├── base.py             # TestGenerator base class
 │   ├── runner.py           # Generation orchestrator
-│   └── generators/         # 31 problem generators
+│   └── generators/         # 7 problem generators
 │
 └── docs/
     └── OPTIMIZATIONS.md    # Performance guide
@@ -93,7 +93,7 @@ Run the test suite to verify all author solutions:
 python test_author_solutions.py
 ```
 
-Expected output: **31/31 passed (100.0%)**
+Expected output: **32/32 passed (100.0%)**
 
 ## Problem List
 
@@ -103,6 +103,7 @@ Expected output: **31/31 passed (100.0%)**
 | 2 | Add Two Numbers | Medium | 36 |
 | 3 | Longest Substring Without Repeating Characters | Medium | 38 |
 | 6 | ZigZag Conversion | Medium | 37 |
+| 20 | Valid Parentheses | Easy | 30 |
 | 49 | Group Anagrams | Medium | 41 |
 | 56 | Merge Intervals | Medium | 42 |
 
@@ -157,4 +158,3 @@ MIT License - see LICENSE file for details.
 ## Acknowledgments
 
 - **Monaco Editor** - https://github.com/microsoft/monaco-editor
-- **Original C++/FLTK implementation** - Reference design
