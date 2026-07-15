@@ -1,0 +1,26 @@
+ID: 2657
+TITLE: Find the Prefix Common Array of Two Arrays
+DIFFICULTY: Medium
+MATCHMODE: exact
+FUNCTION: find_the_prefix_common_array
+ARGUMENTS: [{"name": "A", "type": "List[int]"}, {"name": "B", "type": "List[int]"}]
+RETURN_TYPE: List[int]
+EXAMPLES: 2
+
+CONDITION:
+<p>You are given two <strong>0-indexed</strong> integer permutations <code>A</code> and <code>B</code> of length <code>n</code>.</p>
+<p>A <strong>prefix common array</strong> of <code>A</code> and <code>B</code> is an array <code>C</code> such that <code>C[i]</code> is equal to the count of numbers that are present at or before the index <code>i</code> in both <code>A</code> and <code>B</code>.</p>
+<p>Return <em>the prefix common array of</em> <code>A</code> <em>and</em> <code>B</code>.</p>
+<p>A sequence of <code>n</code> integers is called a <strong>permutation</strong> if it contains all integers from <code>1</code> to <code>n</code> exactly once.</p>
+
+TESTS:
+<args>[1,3,2,4], [3,1,2,4]</args>; <output>[0,2,3,4]</output>
+<args>[2,3,1], [3,1,2]</args>; <output>[0,1,3]</output>
+<args>[1], [1]</args>; <output>[1]</output>
+<args>[1,2], [2,1]</args>; <output>[0,2]</output>
+<args>[1,2,3], [1,2,3]</args>; <output>[1,2,3]</output>
+<args>[1,2,3], [3,2,1]</args>; <output>[0,1,3]</output>
+<args>[3,1,2,4,5], [1,2,3,4,5]</args>; <output>[0,1,3,4,5]</output>
+<args>[5,4,3,2,1], [1,2,3,4,5]</args>; <output>[0,0,1,3,5]</output>
+<args>[2,1,4,3,5], [1,2,3,4,5]</args>; <output>[0,2,2,4,5]</output>
+<args>[1,3,5,2,4], [5,4,3,2,1]</args>; <output>[0,0,1,3,5]</output>

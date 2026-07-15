@@ -1,0 +1,26 @@
+ID: 849
+TITLE: Maximize Distance to Closest Person
+DIFFICULTY: Medium
+MATCHMODE: exact
+FUNCTION: max_dist_to_closest
+ARGUMENTS: [{"name": "seats", "type": "List[int]"}]
+RETURN_TYPE: int
+EXAMPLES: 3
+
+CONDITION:
+<p>You are given an array representing a row of seats where <code>seats[i] = 1</code> represents a person sitting in the <code>i</code>th seat, and <code>seats[i] = 0</code> represents that the <code>i</code>th seat is empty (<strong>0-indexed</strong>).</p>
+<p>There is <strong>at least one</strong> empty seat, and <strong>at least one</strong> person sitting.</p>
+<p>Alex wants to sit in the seat such that the distance between him and the closest person to him is <strong>maximized</strong>.</p>
+<p>Return <em>that maximum distance to the closest person</em>.</p>
+
+TESTS:
+<args>[1,0,0,0,1,0,1]</args>; <output>2</output>
+<args>[1,0,0,0]</args>; <output>3</output>
+<args>[0,1]</args>; <output>1</output>
+<args>[0,0,0,1,0,0,0,0,1,0,0]</args>; <output>3</output>
+<args>[1,0,0,0,0,1]</args>; <output>2</output>
+<args>[0,0,0,0,1]</args>; <output>4</output>
+<args>[1,0,0,0,0,0]</args>; <output>5</output>
+<args>[0,0,1,0,0,0,1,0,0]</args>; <output>2</output>
+<args>[1,0,0,1,0,0,0,1,0,0,0,1]</args>; <output>2</output>
+<args>[0,1,0,0,0,0,0,0,1,0,0,0,0]</args>; <output>6</output>
