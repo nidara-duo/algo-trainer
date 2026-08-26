@@ -7,7 +7,7 @@ from pathlib import Path
 
 from problem_repository import ProblemRepository
 from code_runner import CodeRunner
-from statistics import StatisticsManager
+from submissions import StatisticsManager
 
 
 class Api:
@@ -16,12 +16,11 @@ class Api:
     def __init__(self, base_dir: str):
         self.__base_dir = Path(base_dir)
         self.__data_dir = self.__base_dir / "data"
-        self.__raw_problems_dir = self.__data_dir / "raw_problems"
+        self.__problems_dir = self.__data_dir / "problems"
         self.__db_path = self.__data_dir / "problems_db.json"
 
-
         self.__repo = ProblemRepository(
-            source_dir=str(self.__raw_problems_dir),
+            problems_dir=str(self.__problems_dir),
             db_path=str(self.__db_path),
         )
         self.__repo.initialize()

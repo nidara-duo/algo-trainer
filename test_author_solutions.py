@@ -15,7 +15,7 @@ def test_all_author_solutions():
     """Test all author solutions against their problems."""
 
     base_dir = Path(__file__).parent
-    raw_problems_dir = base_dir / "data" / "raw_problems"
+    problems_dir = base_dir / "data" / "problems"
     db_path = base_dir / "data" / "problems_db.json"
 
     print("=" * 70)
@@ -23,7 +23,7 @@ def test_all_author_solutions():
     print("=" * 70)
 
     print("\n[1/3] Initializing ProblemRepository...")
-    repo = ProblemRepository(str(raw_problems_dir), str(db_path))
+    repo = ProblemRepository(str(problems_dir), str(db_path))
     repo.initialize()
 
     print(f"      Loaded {len(repo._problems)} problems")

@@ -110,10 +110,10 @@ def _run_test_direct(code_str, func_name, args, return_type=None, func_args_json
 
         namespace = _SUBPROCESS_NAMESPACE.copy()
 
-        array_to_ll = namespace.get('array_to_linked_list')
-        ll_to_array = namespace.get('linked_list_to_array')
-        array_to_tree = namespace.get('array_to_tree')
-        tree_to_array = namespace.get('tree_to_array')
+        array_to_ll = namespace['array_to_linked_list']
+        ll_to_array = namespace['linked_list_to_array']
+        array_to_tree = namespace['array_to_tree']
+        tree_to_array = namespace['tree_to_array']
 
         converted_args = []
         if func_args:
@@ -186,16 +186,16 @@ def _run_test_direct(code_str, func_name, args, return_type=None, func_args_json
         if return_type and "ListNode" in return_type:
             if result is None:
                 result = []
-            elif isinstance(result, namespace.get('ListNode', type(None))):
+            elif isinstance(result, namespace['ListNode']):
                 result = ll_to_array(result)
 
         if return_type and "TreeNode" in return_type:
             if result is None:
                 result = []
-            elif isinstance(result, namespace.get('TreeNode', type(None))):
+            elif isinstance(result, namespace['TreeNode']):
                 result = tree_to_array(result)
             elif isinstance(result, list):
-                TreeNodeClass = namespace.get('TreeNode', type(None))
+                TreeNodeClass = namespace['TreeNode']
                 if result and isinstance(result[0], TreeNodeClass):
                     result = [tree_to_array(node) if node is not None else None for node in result]
 
@@ -224,10 +224,10 @@ def _run_test_in_process(code_str, func_name, args, result_queue, return_type=No
 
         namespace = _SUBPROCESS_NAMESPACE.copy()
 
-        array_to_ll = namespace.get('array_to_linked_list')
-        ll_to_array = namespace.get('linked_list_to_array')
-        array_to_tree = namespace.get('array_to_tree')
-        tree_to_array = namespace.get('tree_to_array')
+        array_to_ll = namespace['array_to_linked_list']
+        ll_to_array = namespace['linked_list_to_array']
+        array_to_tree = namespace['array_to_tree']
+        tree_to_array = namespace['tree_to_array']
 
         converted_args = []
         if func_args:
@@ -318,16 +318,16 @@ def _run_test_in_process(code_str, func_name, args, result_queue, return_type=No
         if return_type and "ListNode" in return_type:
             if result is None:
                 result = []
-            elif isinstance(result, namespace.get('ListNode', type(None))):
+            elif isinstance(result, namespace['ListNode']):
                 result = ll_to_array(result)
 
         if return_type and "TreeNode" in return_type:
             if result is None:
                 result = []
-            elif isinstance(result, namespace.get('TreeNode', type(None))):
+            elif isinstance(result, namespace['TreeNode']):
                 result = tree_to_array(result)
             elif isinstance(result, list):
-                TreeNodeClass = namespace.get('TreeNode', type(None))
+                TreeNodeClass = namespace['TreeNode']
                 if result and isinstance(result[0], TreeNodeClass):
                     result = [tree_to_array(node) if node is not None else None for node in result]
 
@@ -412,7 +412,7 @@ class CodeRunner:
 
         return results
 
-    def _run_single_test_with_executor(self, executor: ProcessPoolExecutor, code: str, func_name: str, args: Any, expected: Any, matchmode: str, test_num: int, return_type: str = "", func_args: list = None) -> dict:
+    def _run_single_test_with_executor(self, executor: ProcessPoolExecutor, code: str, func_name: str, args: Any, expected: Any, matchmode: str, test_num: int, return_type: str = "", func_args: list | None = None) -> dict:
         """Run a single test case using ProcessPoolExecutor with strict timeout."""
         result = {
             "test_num": test_num,
@@ -470,7 +470,7 @@ class CodeRunner:
 
         return result
 
-    def _run_single_test(self, code: str, func_name: str, args: Any, expected: Any, matchmode: str, test_num: int, return_type: str = "", func_args: list = None) -> dict:
+    def _run_single_test(self, code: str, func_name: str, args: Any, expected: Any, matchmode: str, test_num: int, return_type: str = "", func_args: list | None = None) -> dict:
         """Run a single test case in a separate process with strict timeout."""
         result = {
             "test_num": test_num,

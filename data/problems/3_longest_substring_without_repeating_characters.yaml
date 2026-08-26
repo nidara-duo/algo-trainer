@@ -1,0 +1,89 @@
+id: 3
+title: Longest Substring Without Repeating Characters
+difficulty: Medium
+matchmode: exact
+function: length_of_longest_substring
+arguments:
+- name: s
+  type: str
+return_type: int
+examples: 3
+condition: |-
+  <p>Given a string <code>s</code>, find the length of the <strong>longest substring</strong> without repeating characters.</p>
+tests:
+- args: [abcabcbb]
+  output: 3
+- args: [bbbbb]
+  output: 1
+- args: [pwwkew]
+  output: 3
+- args: ['']
+  output: 0
+- args: [au]
+  output: 2
+- args: [rHLqmggYxKR]
+  output: 6
+- args: [fWuBHOrfjPpMqOT6efq3CuXL0I]
+  output: 13
+- args: [6wJ7Yf]
+  output: 6
+- args: [7BfsZfZGXGwqb2lKezCcXqjxEG6rHK]
+  output: 17
+- args: [3OunPjf5zH]
+  output: 10
+- args: [BmUw6qtudPcI3kv3]
+  output: 15
+- args: [ZqH0V]
+  output: 5
+- args: [xhLRqxLrJ]
+  output: 6
+- args: [Ns5Suu2iI323nSI80Cve]
+  output: 10
+- args: [LlNss]
+  output: 4
+- args: [jfbbjYDLQe23W8o3ffVDy8kHNeoGOV]
+  output: 12
+- args: [mQOu0qIknxkkuF4TwsYkRTqRx9z]
+  output: 10
+- args: [PQ4SPUicTXXjlbdcaiCYcOktQe]
+  output: 10
+- args: [xuBltP43Veeyv4h79XskpqIOWb3a]
+  output: 18
+- args: [AeunwT0ZEr4RAy66zANrmuOy]
+  output: 14
+- args: [V3BwVmRnyxI63]
+  output: 11
+- args: [StB1tfacBA]
+  output: 7
+- args: [Ze0B7t3mcj0z]
+  output: 10
+- args: [xTQMeJta2gDpnJ]
+  output: 13
+- args: [30mwr8FZgDxeqVq8CJXpjO8Z]
+  output: 14
+- args: [sR2zYKxz0f0D8kIJwxwQXn]
+  output: 9
+- args: [BamfUh8VxbJIUoidCjbXH2]
+  output: 13
+- args: [Qb6Gb3vP15F8I]
+  output: 11
+- args: [ziEBOiw6rlGsgb6o6NXoEUfZMJ]
+  output: 12
+- args: [jHuu9sA4keQXxW8]
+  output: 12
+- args: [q5MKmJ2MY6cyJXmHxFvr]
+  output: 14
+- args: [NwIdBW8peJijdczTTia0j]
+  output: 12
+- args: [g5raPR0P9hpE7sv67HCImAaQH5Ls]
+  output: 11
+- args: [HdY58xdqJje6FHPpZax8pYA48mI7rv]
+  output: 16
+- args: [6ZD0F9HUjClFKd99UXrvNYMyU]
+  output: 11
+- args: [mZCrsyNYMJHySGy8zBFf5yqnn6]
+  output: 11
+- args: [effR9wiQh662eKj3KE]
+  output: 8
+- args: [jux8xNrTwYJkS82cI5QqJOdP]
+  output: 16

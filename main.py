@@ -32,6 +32,9 @@ def main():
         text_select=True
     )
 
+    if window is None:
+        raise RuntimeError("Failed to create pywebview window")
+
     window.events.loaded += on_loaded
 
     webview.start()

@@ -1,5 +1,5 @@
 """
-Problem Repository - loads and caches coding problems from .txt files.
+Problem Repository - loads and caches coding problems from .yaml files.
 
 This module provides automatic template generation from metadata fields.
 Template signatures are generated from FUNCTION, ARGUMENTS, and RETURN_TYPE fields.
@@ -7,25 +7,25 @@ Template signatures are generated from FUNCTION, ARGUMENTS, and RETURN_TYPE fiel
 
 import json
 import os
-import re
-import ast
 import tempfile
 from pathlib import Path
 from typing import Optional
+
+import yaml
 
 
 class ProblemRepository:
     """Manages loading, caching, and synchronization of coding problems."""
 
-    def __init__(self, source_dir: str, db_path: str):
-        self.__source_dir = Path(source_dir)
+    def __init__(self, problems_dir: str, db_path: str):
+        self.__problems_dir = Path(problems_dir)
         self.__db_path = Path(db_path)
-        self.__solutions_dir = self.__source_dir.parent / "solutions"
+        self.__solutions_dir = self.__problems_dir.parent / "solutions"
         self._problems: dict[int, dict] = {}
         self._file_mtimes: dict[str, float] = {}
 
     def initialize(self) -> None:
-        """Load problems from database or build from .txt files."""
+        """Load problems from database or build from .yaml files."""
         if self.__db_path.exists() and not self._needs_sync():
             self._load_database()
         else:
@@ -53,44 +53,36 @@ class ProblemRepository:
 
         return problem
 
-    def _parse_txt(self, path: Path) -> dict:
-        """Parse a .txt problem file into a dictionary."""
-        content = path.read_text(encoding="utf-8")
+    def _parse_yaml(self, path: Path) -> dict:
+        """Parse a .yaml problem file into a dictionary."""
+        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
 
-        problem = {
-            "id": None,
-            "title": "",
-            "difficulty": "",
-            "matchmode": "exact",
-            "function": "",
-            "arguments": [],
-            "return_type": "",
-            "condition": "",
-            "template": "",
-            "tests": [],
-        }
+        arguments = [
+            {"name": arg["name"], "type": arg["type"]}
+            for arg in (data.get("arguments") or [])
+        ]
 
-        sections = self._split_into_sections(content)
+        tests = [
+            {"args": list(test["args"]), "expected": test["output"]}
+            for test in (data.get("tests") or [])
+        ]
 
-        problem["id"] = int(self._extract_field(sections.get("header", ""), "ID"))
-        problem["title"] = self._extract_field(sections.get("header", ""), "TITLE")
-        problem["difficulty"] = self._extract_field(sections.get("header", ""), "DIFFICULTY")
-        problem["matchmode"] = self._extract_field(sections.get("header", ""), "MATCHMODE") or "exact"
-        problem["function"] = self._extract_field(sections.get("header", ""), "FUNCTION")
-
-        args_str = self._extract_field(sections.get("header", ""), "ARGUMENTS")
-        if args_str:
-            problem["arguments"] = json.loads(args_str)
-
-        problem["return_type"] = self._extract_field(sections.get("header", ""), "RETURN_TYPE")
-
-        examples_count_str = self._extract_field(sections.get("header", ""), "EXAMPLES")
-        try:
-            examples_count = int(examples_count_str) if examples_count_str else 2
-        except ValueError:
+        examples_count = data.get("examples")
+        if not isinstance(examples_count, int):
             examples_count = 2
 
-        base_condition = sections.get("condition", "")
+        problem = {
+            "id": int(data["id"]),
+            "title": data.get("title", ""),
+            "difficulty": data.get("difficulty", ""),
+            "matchmode": data.get("matchmode") or "exact",
+            "function": data.get("function", ""),
+            "arguments": arguments,
+            "return_type": data.get("return_type", ""),
+            "condition": "",
+            "template": "",
+            "tests": tests,
+        }
 
         problem["template"] = self._generate_template({
             "function": problem["function"],
@@ -98,20 +90,8 @@ class ProblemRepository:
             "return_type": problem["return_type"],
         })
 
-        tests = []
-        tests_section = sections.get("tests", "")
-        if tests_section:
-            for line in tests_section.split("\n"):
-                line_stripped = line.strip()
-                if line_stripped:
-                    test_data = self._parse_test_line(line_stripped)
-                    if test_data:
-                        tests.append(test_data)
-
-        problem["tests"] = tests
-
         problem["condition"] = self._generate_condition_with_examples(
-            base_condition,
+            data.get("condition", "") or "",
             problem["arguments"],
             tests,
             examples_count
@@ -120,111 +100,6 @@ class ProblemRepository:
         problem["author_solution"] = self._load_author_solution(problem["id"])
 
         return problem
-
-    def _parse_test_line(self, line: str) -> Optional[dict]:
-        """Parse a test line in the new format."""
-        import re
-
-        pattern = r'<args>(.*?)</args>;\s*<output>(.*?)</output>'
-        match = re.match(pattern, line.strip(), re.DOTALL)
-
-        if not match:
-            print(f"Warning: Could not parse test line: {line}")
-            return None
-
-        args_str = match.group(1).strip()
-        output_str = match.group(2).strip()
-
-        args = self._parse_args_string(args_str)
-
-        output_str = output_str.replace('null', 'None')
-        output_str = output_str.replace('false', 'False').replace('true', 'True')
-        try:
-            expected = ast.literal_eval(output_str)
-        except (ValueError, SyntaxError) as e:
-            print(f"Warning: Could not parse output '{output_str}': {e}")
-            expected = output_str
-
-        return {
-            "args": args,
-            "expected": expected,
-        }
-
-    def _parse_args_string(self, args_str: str) -> list:
-        """Parse args string and return a list of parsed arguments."""
-        import re
-
-        args_str = args_str.strip()
-
-        depth = 0
-        in_string = False
-        string_char = None
-        has_comma_at_depth_0 = False
-
-        for char in args_str:
-            if char in ('"', "'"):
-                if not in_string:
-                    in_string = True
-                    string_char = char
-                elif char == string_char:
-                    in_string = False
-                    string_char = None
-            elif char in ('[', '{', '(') and not in_string:
-                depth += 1
-            elif char in (']', '}', ')') and not in_string:
-                depth -= 1
-            elif char == ',' and depth == 0 and not in_string:
-                has_comma_at_depth_0 = True
-                break
-
-        if not has_comma_at_depth_0:
-            if (args_str.startswith('[') and args_str.endswith(']')) or \
-               (args_str.startswith('{') and args_str.endswith('}')):
-                try:
-                    return [ast.literal_eval(args_str)]
-                except (ValueError, SyntaxError):
-                    pass
-
-        args = []
-        current_arg = ""
-        depth = 0
-        in_string = False
-        string_char = None
-
-        for char in args_str:
-            if char in ('"', "'"):
-                if not in_string:
-                    in_string = True
-                    string_char = char
-                elif char == string_char:
-                    in_string = False
-                    string_char = None
-                current_arg += char
-            elif char in ('[', '{', '(') and not in_string:
-                depth += 1
-                current_arg += char
-            elif char in (']', '}', ')') and not in_string:
-                depth -= 1
-                current_arg += char
-            elif char == ',' and depth == 0 and not in_string:
-                arg_stripped = current_arg.strip()
-                if arg_stripped:
-                    try:
-                        args.append(ast.literal_eval(arg_stripped))
-                    except (ValueError, SyntaxError):
-                        args.append(arg_stripped)
-                current_arg = ""
-            else:
-                current_arg += char
-
-        arg_stripped = current_arg.strip()
-        if arg_stripped:
-            try:
-                args.append(ast.literal_eval(arg_stripped))
-            except (ValueError, SyntaxError):
-                args.append(arg_stripped)
-
-        return args
 
     def _load_author_solution(self, problem_id: int) -> Optional[str]:
         """Load author solution from data/solutions/ directory."""
@@ -239,24 +114,6 @@ class ProblemRepository:
             return solution_file.read_text(encoding="utf-8")
         except Exception:
             return None
-
-    def _split_into_sections(self, content: str) -> dict[str, str]:
-        """Split file content into named sections using regex."""
-        pattern = r'^((?:CONDITION|TEMPLATE|IMPORTS|TESTS):)'
-        parts = re.split(pattern, content, flags=re.MULTILINE)
-
-        sections = {"header": parts[0] if parts else ""}
-
-        for i in range(1, len(parts), 2):
-            marker = parts[i].strip(':').lower()
-            content_part = parts[i + 1] if i + 1 < len(parts) else ""
-            sections[marker] = content_part
-
-        for key in ["condition", "template", "tests"]:
-            if key not in sections:
-                sections[key] = ""
-
-        return sections
 
     def _generate_template(self, metadata: dict) -> str:
         """Generate Python function signature template from metadata."""
@@ -319,13 +176,19 @@ class ProblemRepository:
 
         return condition_html + examples_html
 
-    def _extract_field(self, header_text: str, field_name: str) -> str:
-        """Extract a field value from the header section."""
-        pattern = rf"^{field_name}:\s*(.*)$"
-        match = re.search(pattern, header_text, re.MULTILINE)
-        if match:
-            return match.group(1).strip()
-        return ""
+    def _collect_source_files(self) -> list[Path]:
+        """Collect .yaml problem source files."""
+        try:
+            with os.scandir(self.__problems_dir) as entries:
+                files = [
+                    Path(entry.path)
+                    for entry in entries
+                    if entry.is_file() and entry.name.endswith('.yaml')
+                ]
+        except (OSError, IOError):
+            return []
+
+        return sorted(files, key=lambda path: path.name)
 
     def _needs_sync(self) -> bool:
         """Check if database needs synchronization with source files."""
@@ -339,13 +202,10 @@ class ProblemRepository:
         except (json.JSONDecodeError, KeyError):
             return True
 
-        import os
-        current_mtimes = {}
+        current_mtimes: dict[str, float] = {}
         try:
-            with os.scandir(self.__source_dir) as entries:
-                for entry in entries:
-                    if entry.is_file() and entry.name.endswith('.txt'):
-                        current_mtimes[entry.name] = entry.stat().st_mtime
+            for source_file in self._collect_source_files():
+                current_mtimes[source_file.name] = source_file.stat().st_mtime
         except (OSError, IOError):
             return True
 
@@ -357,26 +217,14 @@ class ProblemRepository:
         return False
 
     def _sync_database(self) -> None:
-        """Synchronize database with current .txt files."""
-        import os
-        from pathlib import Path
-
-        try:
-            with os.scandir(self.__source_dir) as entries:
-                txt_files = sorted(
-                    (entry for entry in entries if entry.is_file() and entry.name.endswith('.txt')),
-                    key=lambda e: e.name
-                )
-        except (OSError, IOError):
-            return
-
-        for txt_file in txt_files:
+        """Synchronize database with current .yaml source files."""
+        for source_file in self._collect_source_files():
             try:
-                problem = self._parse_txt(Path(txt_file.path))
+                problem = self._parse_yaml(source_file)
                 self._problems[problem["id"]] = problem
-                self._file_mtimes[txt_file.name] = txt_file.stat().st_mtime
+                self._file_mtimes[source_file.name] = source_file.stat().st_mtime
             except Exception as e:
-                print(f"Error parsing {txt_file.path}: {e}")
+                print(f"Error parsing {source_file}: {e}")
 
         self._save_database()
 

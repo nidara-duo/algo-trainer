@@ -1,0 +1,96 @@
+id: 6
+title: Zigzag Conversion
+difficulty: Medium
+matchmode: exact
+function: convert
+arguments:
+- name: s
+  type: str
+- name: numRows
+  type: int
+return_type: str
+examples: 3
+condition: |-
+  <p>The string <code>"PAYPALISHIRING"</code> is written in a zigzag pattern on a given number of rows like this:</p>
+  <pre>
+  P   A   H   N
+  A P L S I I G
+  Y   I   R
+  </pre>
+  <p>And then read line by line: <code>"PAHNAPLSIIGYIR"</code></p>
+  <p>Write the code that will take a string and make this conversion given a number of rows.</p>
+tests:
+- args: [PAYPALISHIRING, 3]
+  output: PAHNAPLSIIGYIR
+- args: [PAYPALISHIRING, 4]
+  output: PINALSIGYAHRPI
+- args: [A, 1]
+  output: A
+- args: [AB, 1]
+  output: AB
+- args: [hKfoxRFh, 2]
+  output: hfxFKoRh
+- args: [guzGh, 3]
+  output: ghuGz
+- args: [gblGiWDtuMLStxpMOhm, 2]
+  output: gliDuLtpOmbGWtMSxMh
+- args: [UEAgipSuESukojKyYO, 4]
+  output: USoEpukjOAiEuKYgSy
+- args: [nufMukeI, 4]
+  output: neukIfuM
+- args: [DIrEnjEnShvoqywMOwwf, 3]
+  output: DnSqOIEjnhoyMwfrEvww
+- args: [qCJZCZLdxiQIecWCOM, 3]
+  output: qCxeOCZZdiIcCMJLQW
+- args: [IKPAhrZOWTsICn, 4]
+  output: IZCKrOInPhWsAT
+- args: [RkMkHNmU, 5]
+  output: RkUMmkNH
+- args: [LeiPNrLMJVPuRctzWkec, 3]
+  output: LNJRWePrMVuczkciLPte
+- args: [hzQjeVvLxiBqbLQv, 5]
+  output: hxzLivQvBQjVqLeb
+- args: [nEbTNKLADTfhFewO, 5]
+  output: nDEATObLfwTKheNF
+- args: [tBCTRwmRtUIrEvzSP, 4]
+  output: tmEBwRrvCRtIzPTUS
+- args: [JFbadhKFnqXoLO, 3]
+  output: JdnLFahFqoObKX
+- args: [VXkYoxvvMGodRfMOlXI, 5]
+  output: VMlXvGOXkvoMIYxdfoR
+- args: [kGOntgUUX, 2]
+  output: kOtUXGngU
+- args: [ebjOyYRtVnZmxFjQUsNa, 4]
+  output: eRxNbYtmFsajyVZjUOnQ
+- args: [JfaPoqs, 5]
+  output: JfasPqo
+- args: [ZttBZG, 2]
+  output: ZtZtBG
+- args: [XlDPpJeFlYdcLUOuDTT, 4]
+  output: XeLTlJFcUTDpldODPYu
+- args: [eKkeMTsYEyYsosbAO, 3]
+  output: eMEoOKeTYyssAksYb
+- args: [AtQFkITzGqSL, 2]
+  output: AQkTGStFIzqL
+- args: [mrExKEnkqdNhHfZcddkr, 3]
+  output: mKqHdrxEkdhfcdrEnNZk
+- args: [tTJKDdzfS, 5]
+  output: tSTfJzKdD
+- args: [rMGzfDICOFvNXpF, 3]
+  output: rfOXMzDCFNpGIvF
+- args: [FgKLxoEyDXurh, 2]
+  output: FKxEDuhgLoyXr
+- args: [qmohAykECcBFp, 4]
+  output: qkpmyEFoACBhc
+- args: [vhFCo, 2]
+  output: vFohC
+- args: [IVbUfnLsBGadToFgqBd, 3]
+  output: IfBTqVUnsGdogBbLaFd
+- args: [zCnMgkbxETFX, 4]
+  output: zbCkxXngEFMT
+- args: [JvoSFRkaLAFhnbSb, 4]
+  output: JknvRahboFLFSSAb
+- args: [MAkyCUePxwQyvnMv, 3]
+  output: MCxvAyUPwynvkeQM
+- args: [CdaQtSjxCQnOHSK, 2]
+  output: CatjCnHKdQSxQOS
