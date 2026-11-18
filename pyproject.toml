@@ -1,0 +1,66 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "algo-trainer"
+version = "0.2.0"
+description = "Desktop application for practicing Python coding problems"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pywebview>=5.0",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+algo-trainer = "algo_trainer.app:main"
+algo-trainer-check = "algo_trainer.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.8",
+    "mypy>=1.13",
+    "types-PyYAML>=6.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/algo_trainer"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/algo_trainer/execution/prelude.py" = ["UP006", "UP035"]
+
+[tool.mypy]
+python_version = "3.12"
+mypy_path = "src"
+packages = ["algo_trainer"]
+warn_unused_ignores = true
+warn_return_any = true
+
+[[tool.mypy.overrides]]
+module = [
+    "algo_trainer.domain.*",
+    "algo_trainer.problems.*",
+    "algo_trainer.rendering.*",
+    "algo_trainer.execution.*",
+    "algo_trainer.stats.*",
+    "algo_trainer.infra.*",
+    "algo_trainer.config",
+]
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["webview", "webview.*"]
+ignore_missing_imports = true
