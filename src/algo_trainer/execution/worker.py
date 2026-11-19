@@ -2,14 +2,24 @@
 
 from __future__ import annotations
 
-from multiprocessing.connection import Connection
+from typing import Any, Protocol
 
 from algo_trainer.execution.harness import ExecutionTask, run_single_case
 
+WORKER_READY = "ready"
 
-def worker_loop(conn: Connection) -> None:
+
+class PipeConn(Protocol):
+    def send(self, obj: Any) -> None: ...
+    def recv(self) -> Any: ...
+    def poll(self, timeout: float | None = ...) -> bool: ...
+    def close(self) -> None: ...
+
+
+def worker_loop(conn: PipeConn) -> None:
     """Receive ExecutionTask objects over `conn`, run them, and send back results."""
     try:
+        conn.send(WORKER_READY)
         while True:
             try:
                 task: ExecutionTask | None = conn.recv()

@@ -22,15 +22,26 @@ class TestRunner:
     def run_tests(self, code: str, problem: Problem) -> RunReport:
         tests = problem.tests
         total = len(tests)
+
+        try:
+            compile(code, "<solution>", "exec")
+        except (SyntaxError, ValueError) as exc:
+            return RunReport(
+                success=False,
+                results=(),
+                summary=f"0/{total} passed",
+                error=f"{type(exc).__name__}: {exc}",
+            )
+
         arg_types = tuple(arg.type for arg in problem.arguments)
         matcher = get_matcher(problem.matchmode)
 
         outcomes: list[TestOutcome] = []
         passed_count = 0
-        start_time = time.monotonic()
         timed_out_total = False
 
-        with WorkerPool() as pool:
+        with WorkerPool(startup_timeout_s=self._config.worker_startup_timeout_s) as pool:
+            start_time = time.monotonic()
             for idx, test in enumerate(tests, start=1):
                 elapsed = time.monotonic() - start_time
                 if elapsed > self._config.total_timeout_s:
@@ -59,6 +70,13 @@ class TestRunner:
                 serialized_args = serialize_value(test.args)
 
                 if not exec_res.get("success", False):
+                    if exec_res.get("fatal", False):
+                        return RunReport(
+                            success=False,
+                            results=(),
+                            summary=f"0/{total} passed",
+                            error=exec_res.get("error", "Unknown error"),
+                        )
                     got = "<timeout>" if exec_res.get("timeout") else None
                     outcomes.append(
                         TestOutcome(

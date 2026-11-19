@@ -54,6 +54,7 @@ class ExecutionConfig:
 
     per_test_timeout_s: float = 0.5
     total_timeout_s: float = 5.0
+    worker_startup_timeout_s: float = 5.0
     max_stdout_bytes: int = 4096
 
 

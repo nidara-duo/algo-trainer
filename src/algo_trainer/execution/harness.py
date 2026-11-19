@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import contextlib
+import functools
 import io
 from dataclasses import dataclass
+from types import CodeType
 from typing import Any
 
 from algo_trainer.execution.prelude import (
@@ -118,20 +120,58 @@ def _truncate_stdout(text: str, max_bytes: int) -> str:
     return truncated + "\n... [stdout truncated]"
 
 
+@functools.lru_cache(maxsize=16)
+def _compile_solution(code: str) -> CodeType:
+    return compile(code, "<solution>", "exec")
+
+
 def run_single_case(task: ExecutionTask) -> dict[str, Any]:
     """Compile and execute user code for a single test case."""
     namespace = build_namespace()
     stdout_buf = io.StringIO()
 
     try:
-        compiled = compile(task.code, "<solution>", "exec")
+        compiled = _compile_solution(task.code)
         with contextlib.redirect_stdout(stdout_buf):
             exec(compiled, namespace)
     except Exception as exc:
         return {
             "success": False,
+            "fatal": True,
             "result": None,
             "error": f"{type(exc).__name__}: {exc}",
+            "stdout": _truncate_stdout(stdout_buf.getvalue(), task.max_stdout_bytes),
+        }
+
+    if task.invocation == "class":
+        if (
+            len(task.args) != 2
+            or not isinstance(task.args[0], list)
+            or not isinstance(task.args[1], list)
+            or not task.args[0]
+        ):
+            return {
+                "success": False,
+                "fatal": True,
+                "result": None,
+                "error": "ValueError: Class invocation expects [methods, method_args]",
+                "stdout": _truncate_stdout(stdout_buf.getvalue(), task.max_stdout_bytes),
+            }
+        class_name = task.args[0][0]
+        if class_name not in namespace:
+            return {
+                "success": False,
+                "fatal": True,
+                "result": None,
+                "error": f"NameError: Class '{class_name}' not found",
+                "stdout": _truncate_stdout(stdout_buf.getvalue(), task.max_stdout_bytes),
+            }
+    elif task.func_name not in namespace:
+        return {
+            "success": False,
+            "fatal": True,
+            "result": None,
+            "error": f"NameError: Function '{task.func_name}' not found",
             "stdout": _truncate_stdout(stdout_buf.getvalue(), task.max_stdout_bytes),
         }
 
@@ -140,8 +180,6 @@ def run_single_case(task: ExecutionTask) -> dict[str, Any]:
             if task.invocation == "class":
                 raw_result: Any = _invoke_class(namespace, task.args)
             else:
-                if task.func_name not in namespace:
-                    raise NameError(f"Function '{task.func_name}' not found")
                 fn = namespace[task.func_name]
                 converted_args = _convert_input_args(task.args, task.arg_types)
                 raw_result = fn(*converted_args)
@@ -158,6 +196,7 @@ def run_single_case(task: ExecutionTask) -> dict[str, Any]:
     except Exception as exc:
         return {
             "success": False,
+            "fatal": False,
             "result": None,
             "error": f"{type(exc).__name__}: {exc}",
             "stdout": _truncate_stdout(stdout_buf.getvalue(), task.max_stdout_bytes),

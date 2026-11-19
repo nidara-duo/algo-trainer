@@ -4,26 +4,20 @@ from __future__ import annotations
 
 import multiprocessing
 from multiprocessing.context import SpawnProcess
-from typing import Any, Protocol
+from typing import Any
 
 from algo_trainer.execution.harness import ExecutionTask
-from algo_trainer.execution.worker import worker_loop
-
-
-class _PipeConn(Protocol):
-    def send(self, obj: Any) -> None: ...
-    def recv(self) -> Any: ...
-    def poll(self, timeout: float | None = ...) -> bool: ...
-    def close(self) -> None: ...
+from algo_trainer.execution.worker import WORKER_READY, PipeConn, worker_loop
 
 
 class WorkerPool:
     """Manages a single warm spawned worker process for sequential test execution."""
 
-    def __init__(self) -> None:
+    def __init__(self, startup_timeout_s: float = 5.0) -> None:
         self._ctx = multiprocessing.get_context("spawn")
+        self._startup_timeout_s = startup_timeout_s
         self._process: SpawnProcess | None = None
-        self._parent_conn: _PipeConn | None = None
+        self._parent_conn: PipeConn | None = None
 
     def __enter__(self) -> WorkerPool:
         self._spawn()
@@ -40,6 +34,15 @@ class WorkerPool:
         child_conn.close()
         self._parent_conn = parent_conn
         self._process = process
+        try:
+            if not parent_conn.poll(self._startup_timeout_s):
+                raise RuntimeError(f"Worker failed to start within {self._startup_timeout_s}s")
+            msg = parent_conn.recv()
+            if msg != WORKER_READY:
+                raise RuntimeError(f"Unexpected worker handshake: {msg!r}")
+        except Exception:
+            self._kill_and_reset()
+            raise
 
     def _kill_and_reset(self) -> None:
         if self._process is not None:
