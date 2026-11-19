@@ -19,6 +19,7 @@ class MatchMode(StrEnum):
     EXACT = "exact"
     SORTED = "sorted"
     APPROX = "approx"
+    WILDCARD_NONE = "wildcard_none"
 
 
 class Invocation(StrEnum):

@@ -1,0 +1,55 @@
+id: 2657
+title: Find the Prefix Common Array of Two Arrays
+difficulty: Medium
+matchmode: exact
+function: find_the_prefix_common_array
+arguments:
+- name: A
+  type: List[int]
+- name: B
+  type: List[int]
+return_type: List[int]
+examples: 2
+condition: |-
+  <p>You are given two <strong>0-indexed</strong> integer permutations <code>A</code> and <code>B</code> of length <code>n</code>.</p>
+  <p>A <strong>prefix common array</strong> of <code>A</code> and <code>B</code> is an array <code>C</code> such that <code>C[i]</code> is equal to the count of numbers that are present at or before the index <code>i</code> in both <code>A</code> and <code>B</code>.</p>
+  <p>Return <em>the prefix common array of</em> <code>A</code> <em>and</em> <code>B</code>.</p>
+  <p>A sequence of <code>n</code> integers is called a <strong>permutation</strong> if it contains all integers from <code>1</code> to <code>n</code> exactly once.</p>
+tests:
+- args: [[1, 3, 2, 4], [3, 1, 2, 4]]
+  output: [0, 2, 3, 4]
+- args: [[2, 3, 1], [3, 1, 2]]
+  output: [0, 1, 3]
+- args: [[1], [1]]
+  output: [1]
+- args: [[1, 2], [2, 1]]
+  output: [0, 2]
+- args: [[1, 2, 3], [1, 2, 3]]
+  output: [1, 2, 3]
+- args: [[1, 2, 3], [3, 2, 1]]
+  output: [0, 1, 3]
+- args: [[3, 1, 2, 4, 5], [1, 2, 3, 4, 5]]
+  output: [0, 1, 3, 4, 5]
+- args: [[5, 4, 3, 2, 1], [1, 2, 3, 4, 5]]
+  output: [0, 0, 1, 3, 5]
+- args: [[2, 1, 4, 3, 5], [1, 2, 3, 4, 5]]
+  output: [0, 2, 2, 4, 5]
+- args: [[1, 3, 5, 2, 4], [5, 4, 3, 2, 1]]
+  output: [0, 0, 2, 3, 5]
+solution: |-
+  def find_the_prefix_common_array(A: List[int], B: List[int]) -> List[int]:
+      seen_a = set()
+      seen_b = set()
+      common = set()
+      result = []
+
+      for a, b in zip(A, B):
+          seen_a.add(a)
+          seen_b.add(b)
+          if a in seen_b:
+              common.add(a)
+          if b in seen_a:
+              common.add(b)
+          result.append(len(common))
+
+      return result

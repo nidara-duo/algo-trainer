@@ -1,0 +1,52 @@
+id: 849
+title: Maximize Distance to Closest Person
+difficulty: Medium
+matchmode: exact
+function: max_dist_to_closest
+arguments:
+- name: seats
+  type: List[int]
+return_type: int
+examples: 3
+condition: |-
+  <p>You are given an array representing a row of seats where <code>seats[i] = 1</code> represents a person sitting in the <code>i</code>th seat, and <code>seats[i] = 0</code> represents that the <code>i</code>th seat is empty (<strong>0-indexed</strong>).</p>
+  <p>There is <strong>at least one</strong> empty seat, and <strong>at least one</strong> person sitting.</p>
+  <p>Alex wants to sit in the seat such that the distance between him and the closest person to him is <strong>maximized</strong>.</p>
+  <p>Return <em>that maximum distance to the closest person</em>.</p>
+tests:
+- args: [[1, 0, 0, 0, 1, 0, 1]]
+  output: 2
+- args: [[1, 0, 0, 0]]
+  output: 3
+- args: [[0, 1]]
+  output: 1
+- args: [[0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0]]
+  output: 3
+- args: [[1, 0, 0, 0, 0, 1]]
+  output: 2
+- args: [[0, 0, 0, 0, 1]]
+  output: 4
+- args: [[1, 0, 0, 0, 0, 0]]
+  output: 5
+- args: [[0, 0, 1, 0, 0, 0, 1, 0, 0]]
+  output: 2
+- args: [[1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1]]
+  output: 2
+- args: [[0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]]
+  output: 4
+solution: |-
+  def max_dist_to_closest(seats: List[int]) -> int:
+      prev = -1
+      best = 0
+
+      for i, seat in enumerate(seats):
+          if seat == 1:
+              if prev < 0:
+                  best = i
+              else:
+                  best = max(best, (i - prev) // 2)
+              prev = i
+
+      best = max(best, len(seats) - 1 - prev)
+
+      return best

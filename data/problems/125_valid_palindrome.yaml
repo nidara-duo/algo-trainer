@@ -1,0 +1,105 @@
+id: 125
+title: Valid Palindrome
+difficulty: Easy
+matchmode: exact
+function: is_palindrome
+arguments:
+- name: s
+  type: str
+return_type: bool
+examples: 2
+condition: |-
+  <p>A phrase is a <strong>palindrome</strong> if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward.</p>
+  <p>Given a string <code>s</code>, return <code>true</code> if it is a palindrome, or <code>false</code> otherwise.</p>
+tests:
+- args: ['A man, a plan, a canal: Panama']
+  output: true
+- args: [race a car]
+  output: false
+- args: [' ']
+  output: true
+- args: ['']
+  output: true
+- args: [d;hDJ;26DzV7db]
+  output: false
+- args: [FV7v17Ym]
+  output: false
+- args: [RbYJRwnJxTP8OK]
+  output: false
+- args: [5bCyajLXJHti]
+  output: false
+- args: ['ch lYfoB4J9X:E2IQGav']
+  output: false
+- args: ['tHDBqf,']
+  output: false
+- args: [PQF9PnwaH1yOxu]
+  output: false
+- args: ['poaHpkeav4,8W2P6']
+  output: false
+- args: [g1p9tHp7fW.oOfoJLZt9]
+  output: false
+- args: [5sXUHp. P3iE0Y9s]
+  output: false
+- args: [hvU67s4L5h]
+  output: false
+- args: [QJqxKhiX]
+  output: false
+- args: [':H:927iYmuxT']
+  output: false
+- args: [xH0u EMlhUExZox;SIj]
+  output: false
+- args: [vQq;Y8WaeMwDqY]
+  output: false
+- args: ['QGndBdwDL,;eP,r']
+  output: false
+- args: ['6X8SJNbQ:EISr']
+  output: false
+- args: [XfgwcPAzgp t19sSruW]
+  output: false
+- args: ['uod:QKqi0c9ExVD']
+  output: false
+- args: [4XsWtA]
+  output: false
+- args: [e6DJDnJuelBjI.au]
+  output: false
+- args: ['ZSt:6v:F4:dA,']
+  output: false
+- args: ['S:oVr oBwG40i9']
+  output: false
+- args: [twsJ z2CQ]
+  output: false
+- args: ['Og5:V4:43OJ']
+  output: false
+- args: [sAl;fKsyNeivl]
+  output: false
+- args: [;LLQEI5x]
+  output: false
+- args: [jvK3kuSq]
+  output: false
+- args: [gR2MtWu;v.BCIDgtWaxD]
+  output: false
+- args: ['4oMQ,QGJrmz,39pvjeM']
+  output: false
+- args: ['fsV,Rb0PR']
+  output: false
+- args: [8zR8 MMM]
+  output: false
+- args: ['d:ZBgdGeB']
+  output: false
+solution: |-
+  def is_palindrome(s: str) -> bool:
+      left, right = 0, len(s) - 1
+
+      while left < right:
+          while left < right and not s[left].isalnum():
+              left += 1
+          while left < right and not s[right].isalnum():
+              right -= 1
+
+          if s[left].lower() != s[right].lower():
+              return False
+
+          left += 1
+          right -= 1
+
+      return True

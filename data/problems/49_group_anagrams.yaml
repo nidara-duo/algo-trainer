@@ -94,3 +94,15 @@ tests:
   output: [[oi, io, oi, io], [wiyea, iaewy, iywea, wayei], [wcscl], [pfgqyi, yigqfp]]
 - args: [[wdpxmm, gngif, gnifg, pmwdmx]]
   output: [[wdpxmm, pmwdmx], [gngif, gnifg]]
+solution: |-
+  def group_anagrams(strs: List[str]) -> List[List[str]]:
+      from collections import defaultdict
+
+      anagrams = defaultdict(list)
+      for s in strs:
+          counts = [0] * 26
+          for char in s:
+              counts[ord(char) - ord('a')] += 1
+          anagrams[tuple(counts)].append(s)
+
+      return list(anagrams.values())

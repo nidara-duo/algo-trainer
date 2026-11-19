@@ -66,10 +66,23 @@ def compare_approx(got: Any, expected: Any, tol: float = 1e-6) -> bool:
     return compare_exact(got, expected)
 
 
+def compare_wildcard_none(got: Any, expected: Any) -> bool:
+    """Compare lists where `None` in `expected` matches any non-bool `int` (for random methods)."""
+    if isinstance(got, list) and isinstance(expected, list):
+        if len(got) != len(expected):
+            return False
+        return all(
+            (e is None and _is_number(g) and isinstance(g, int)) or compare_exact(g, e)
+            for g, e in zip(got, expected, strict=True)
+        )
+    return compare_exact(got, expected)
+
+
 MATCHERS: dict[MatchMode, Matcher] = {
     MatchMode.EXACT: compare_exact,
     MatchMode.SORTED: compare_sorted,
     MatchMode.APPROX: compare_approx,
+    MatchMode.WILDCARD_NONE: compare_wildcard_none,
 }
 
 

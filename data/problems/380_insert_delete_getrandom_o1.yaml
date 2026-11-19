@@ -1,0 +1,106 @@
+id: 380
+title: Insert Delete GetRandom O(1)
+difficulty: Medium
+matchmode: wildcard_none
+function: RandomizedSet
+arguments: []
+return_type: None
+examples: 3
+condition: |-
+  <p>Implement the <code>RandomizedSet</code> class:</p>
+  <ul>
+    <li><code>RandomizedSet()</code> Initializes the <code>RandomizedSet</code> object.</li>
+    <li><code>bool insert(int val)</code> Inserts an item <code>val</code> into the set and returns <code>true</code> if the item was not present, and <code>false</code> otherwise.</li>
+    <li><code>bool remove(int val)</code> Removes an item <code>val</code> from the set and returns <code>true</code> if the item was present, and <code>false</code> otherwise.</li>
+    <li><code>int getRandom()</code> Returns a random element from the current set of elements.</li>
+  </ul>
+  <p><strong>Note:</strong> This task requires implementing a class. The tests will create an instance and call methods on it.</p>
+tests:
+- args: [[RandomizedSet, insert, insert, getRandom, insert, insert, insert, remove, remove, insert, insert, insert, remove, insert, remove], [[], [-13], [-24], [], [-1], [-24], [47], [-13], [-24], [-23], [8], [33], [47], [25], [33]]]
+  output: [null, true, true, null, true, false, true, true, true, true, true, true, true, true, true]
+- args: [[RandomizedSet, insert, insert, remove, getRandom, insert, remove, remove, insert, insert, insert, insert], [[], [20], [0], [20], [], [17], [17], [0], [-15], [-11], [47], [-26]]]
+  output: [null, true, true, true, null, true, true, true, true, true, true, true]
+- args: [[RandomizedSet, insert, insert, insert, insert, getRandom, getRandom, insert, getRandom], [[], [5], [24], [-23], [27], [], [], [41], []]]
+  output: [null, true, true, true, true, null, null, true, null]
+- args: [[RandomizedSet, insert, getRandom, insert, insert, insert, getRandom, insert, insert, insert, insert, getRandom], [[], [29], [], [9], [-30], [-12], [], [1], [11], [-30], [17], []]]
+  output: [null, true, null, true, true, true, null, true, true, false, true, null]
+- args: [[RandomizedSet, insert, getRandom, getRandom, insert, insert, remove, remove, remove, insert, insert], [[], [-20], [], [], [0], [-12], [-20], [0], [-12], [-8], [8]]]
+  output: [null, true, null, null, true, true, true, true, true, true, true]
+- args: [[RandomizedSet, insert, remove, insert, getRandom, remove, insert, insert, getRandom, insert, insert, insert, remove], [[], [22], [22], [35], [], [35], [5], [7], [], [-39], [-36], [19], [5]]]
+  output: [null, true, true, true, null, true, true, true, null, true, true, true, true]
+- args: [[RandomizedSet, insert, insert, remove, insert, insert, remove, remove, remove, insert], [[], [4], [20], [20], [40], [-22], [40], [-22], [4], [-12]]]
+  output: [null, true, true, true, true, true, true, true, true, true]
+- args: [[RandomizedSet, insert, getRandom, remove, insert, getRandom, insert, insert, insert, remove, remove, insert, remove, insert, remove], [[], [-47], [], [-47], [-17], [], [2], [-33], [-45], [-33], [-17], [46], [46], [11], [-45]]]
+  output: [null, true, null, true, true, null, true, true, true, true, true, true, true, true, true]
+- args: [[RandomizedSet, insert, remove, insert, getRandom, getRandom, getRandom, insert, insert, insert, getRandom, insert, insert, getRandom], [[], [15], [15], [36], [], [], [], [13], [-39], [-19], [], [50], [-32], []]]
+  output: [null, true, true, true, null, null, null, true, true, true, null, true, true, null]
+- args: [[RandomizedSet, insert, insert, insert, insert, insert, insert, insert, insert, getRandom, insert, insert, insert, remove, insert, getRandom], [[], [-44], [-27], [28], [22], [21], [46], [37], [23], [], [26], [14], [7], [28], [39], []]]
+  output: [null, true, true, true, true, true, true, true, true, null, true, true, true, true, true, null]
+- args: [[RandomizedSet, insert, insert, getRandom, insert, remove, remove, insert, getRandom, insert, remove, insert], [[], [-43], [-31], [], [5], [5], [-31], [-40], [], [10], [-40], [-29]]]
+  output: [null, true, true, null, true, true, true, true, null, true, true, true]
+- args: [[RandomizedSet, insert, getRandom, insert, remove, insert, remove, insert, remove], [[], [-49], [], [-23], [-23], [-47], [-47], [7], [-49]]]
+  output: [null, true, null, true, true, true, true, true, true]
+- args: [[RandomizedSet, insert, remove, insert, insert, remove, remove, insert, remove, insert, remove, insert], [[], [-46], [-46], [-34], [-48], [-48], [-34], [-19], [-19], [-16], [-16], [-9]]]
+  output: [null, true, true, true, true, true, true, true, true, true, true, true]
+- args: [[RandomizedSet, insert, insert, remove, insert, getRandom, remove, insert, getRandom, remove, insert, insert], [[], [3], [17], [17], [-50], [], [3], [-2], [], [-50], [18], [9]]]
+  output: [null, true, true, true, true, null, true, true, null, true, true, true]
+- args: [[RandomizedSet, insert, remove, insert, remove, insert, insert, insert, getRandom, getRandom, insert, remove, remove], [[], [-38], [-38], [27], [27], [-49], [-34], [41], [], [], [-11], [-49], [-34]]]
+  output: [null, true, true, true, true, true, true, true, null, null, true, true, true]
+- args: [[RandomizedSet, insert, insert, getRandom, insert, getRandom, remove, insert, remove, getRandom, insert], [[], [15], [-47], [], [27], [], [-47], [40], [15], [], [49]]]
+  output: [null, true, true, null, true, null, true, true, true, null, true]
+- args: [[RandomizedSet, insert, getRandom, insert, insert, getRandom, insert, getRandom, insert, remove, getRandom, getRandom], [[], [25], [], [-43], [-23], [], [-40], [], [-35], [-43], [], []]]
+  output: [null, true, null, true, true, null, true, null, true, true, null, null]
+- args: [[RandomizedSet, insert, getRandom, insert, remove, getRandom, insert, insert, insert, insert, insert], [[], [37], [], [-30], [37], [], [40], [-39], [-33], [10], [-7]]]
+  output: [null, true, null, true, true, null, true, true, true, true, true]
+- args: [[RandomizedSet, insert, insert, getRandom, insert, insert, getRandom, insert, remove, getRandom, insert], [[], [-25], [-46], [], [9], [-7], [], [-43], [-46], [], [-22]]]
+  output: [null, true, true, null, true, true, null, true, true, null, true]
+- args: [[RandomizedSet, insert, getRandom, getRandom, insert, insert, insert, insert, remove, insert], [[], [-10], [], [], [34], [-45], [11], [10], [-45], [8]]]
+  output: [null, true, null, null, true, true, true, true, true, true]
+- args: [[RandomizedSet, insert, insert, insert, remove, insert, remove, getRandom, remove, getRandom, getRandom, getRandom, getRandom, getRandom, getRandom], [[], [4], [11], [-42], [11], [-3], [-42], [], [4], [], [], [], [], [], []]]
+  output: [null, true, true, true, true, true, true, null, true, null, null, null, null, null, null]
+- args: [[RandomizedSet, insert, getRandom, insert, remove, insert, insert, getRandom, insert, remove, insert, getRandom], [[], [41], [], [42], [42], [21], [-5], [], [45], [-5], [-47], []]]
+  output: [null, true, null, true, true, true, true, null, true, true, true, null]
+- args: [[RandomizedSet, insert, getRandom, getRandom, getRandom, remove, insert, insert, insert], [[], [-43], [], [], [], [-43], [16], [-43], [21]]]
+  output: [null, true, null, null, null, true, true, true, true]
+- args: [[RandomizedSet, insert, remove, insert, remove, insert, insert, getRandom, remove], [[], [-50], [-50], [-1], [-1], [26], [-41], [], [26]]]
+  output: [null, true, true, true, true, true, true, null, true]
+- args: [[RandomizedSet, insert, insert, remove, insert, remove, getRandom, remove, insert, insert, insert, remove, getRandom, remove, remove], [[], [33], [10], [33], [-42], [10], [], [-42], [4], [-25], [12], [4], [], [12], [-25]]]
+  output: [null, true, true, true, true, true, null, true, true, true, true, true, null, true, true]
+- args: [[RandomizedSet, insert, insert, insert, insert, remove, remove, remove, insert, insert, insert, insert, insert, insert, getRandom], [[], [-7], [46], [-17], [44], [-17], [44], [46], [22], [-40], [-32], [49], [32], [26], []]]
+  output: [null, true, true, true, true, true, true, true, true, true, true, true, true, true, null]
+- args: [[RandomizedSet, insert, insert, getRandom, insert, insert, insert, remove, insert, getRandom, insert, getRandom, remove, insert, insert], [[], [-1], [-24], [], [-17], [-13], [47], [-17], [4], [], [20], [], [47], [-15], [50]]]
+  output: [null, true, true, null, true, true, true, true, true, null, true, null, true, true, true]
+- args: [[RandomizedSet, insert, insert, getRandom, getRandom, remove, insert, insert, remove, getRandom], [[], [9], [36], [], [], [9], [6], [-39], [36], []]]
+  output: [null, true, true, null, null, true, true, true, true, null]
+- args: [[RandomizedSet, insert, getRandom, insert, insert, remove, getRandom, insert, insert, insert, getRandom, remove], [[], [30], [], [8], [-7], [-7], [], [-8], [-11], [20], [], [30]]]
+  output: [null, true, null, true, true, true, null, true, true, true, null, true]
+- args: [[RandomizedSet, insert, insert, insert, getRandom, insert, remove, insert, insert, insert, getRandom, insert, remove, insert], [[], [41], [-15], [-34], [], [32], [32], [42], [-13], [-17], [], [-48], [-15], [-43]]]
+  output: [null, true, true, true, null, true, true, true, true, true, null, true, true, true]
+solution: |-
+  import random
+
+  class RandomizedSet:
+      def __init__(self):
+          self.vals = []
+          self.val_to_idx = {}
+
+      def insert(self, val: int) -> bool:
+          if val in self.val_to_idx:
+              return False
+          self.val_to_idx[val] = len(self.vals)
+          self.vals.append(val)
+          return True
+
+      def remove(self, val: int) -> bool:
+          if val not in self.val_to_idx:
+              return False
+          idx = self.val_to_idx[val]
+          last_val = self.vals[-1]
+          self.vals[idx] = last_val
+          self.val_to_idx[last_val] = idx
+          self.vals.pop()
+          del self.val_to_idx[val]
+          return True
+
+      def getRandom(self) -> int:
+          return random.choice(self.vals)

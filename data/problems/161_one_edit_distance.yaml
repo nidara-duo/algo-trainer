@@ -1,0 +1,129 @@
+id: 161
+title: One Edit Distance
+difficulty: Medium
+matchmode: exact
+function: is_one_edit_distance
+arguments:
+- name: s
+  type: str
+- name: t
+  type: str
+return_type: bool
+examples: 4
+condition: |-
+  <p>Given two strings <code>s</code> and <code>t</code>, return <code>true</code> if they are both one edit distance apart, otherwise return <code>false</code>.</p>
+  <p>A string <code>s</code> is said to be one distance apart from a string <code>t</code> if you can:</p>
+  <ul>
+    <li>Insert exactly one character into <code>s</code> to get <code>t</code>.</li>
+    <li>Delete exactly one character from <code>s</code> to get <code>t</code>.</li>
+    <li>Replace exactly one character of <code>s</code> with a different character to get <code>t</code>.</li>
+  </ul>
+tests:
+- args: [ab, acb]
+  output: true
+- args: ['', '']
+  output: false
+- args: [a, '']
+  output: true
+- args: ['', A]
+  output: true
+- args: [abc, abc]
+  output: false
+- args: [abc, abcd]
+  output: true
+- args: [ab, ba]
+  output: false
+- args: [gpupmwn, gpupmwr]
+  output: true
+- args: [cafasf, cafas]
+  output: true
+- args: [tgdijjqrn, tgdijjqln]
+  output: true
+- args: [bife, bifre]
+  output: true
+- args: [avqzcdsj, avqzcdsjh]
+  output: true
+- args: [qduqctjk, qduqctajk]
+  output: true
+- args: [iswxjhzn, isjwxjhzn]
+  output: true
+- args: [fvoa, fva]
+  output: true
+- args: [vexgbmfm, vexgbfm]
+  output: true
+- args: [slitwzu, soitwzu]
+  output: true
+- args: [apdthmwd, apdzthmwd]
+  output: true
+- args: [tzqq, tzqq]
+  output: false
+- args: [rgunozm, rgunozym]
+  output: true
+- args: [yhf, khf]
+  output: true
+- args: [feuvyaux, feruvyaux]
+  output: true
+- args: [vjwefyd, vjwefmd]
+  output: true
+- args: [scpzps, cpzps]
+  output: true
+- args: [llqxqckdd, llqxgqckdd]
+  output: true
+- args: [jtuk, hjtuk]
+  output: true
+- args: [uwo, wo]
+  output: true
+- args: [mpzfggrspu, mpzggrspu]
+  output: true
+- args: [smdt, smdt]
+  output: false
+- args: [pql, pkl]
+  output: true
+- args: [kokxb, kokxb]
+  output: false
+- args: [sph, sph]
+  output: false
+- args: [focnge, fcnge]
+  output: true
+- args: [bceat, bxeat]
+  output: true
+- args: [fuksij, fuksaj]
+  output: true
+- args: [wjoyxotla, wjyxotla]
+  output: true
+- args: [suhe, uhe]
+  output: true
+- args: [gipbcqv, gipbcqv]
+  output: false
+- args: [clvor, clvor]
+  output: false
+- args: [tfmvcbg, tfmvwcbg]
+  output: true
+solution: |-
+  def is_one_edit_distance(s: str, t: str) -> bool:
+      if s == t:
+          return False
+
+      ls, lt = len(s), len(t)
+
+      if ls > lt:
+          s, t = t, s
+          ls, lt = lt, ls
+
+      if lt - ls > 1:
+          return False
+
+      edited = False
+      j = 0
+
+      for i in range(ls):
+          if s[i] != t[j]:
+              if edited:
+                  return False
+              edited = True
+
+              if lt - ls:
+                  j += 1
+          j += 1
+
+      return True

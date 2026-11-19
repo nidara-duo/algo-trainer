@@ -1,0 +1,105 @@
+id: 680
+title: Valid Palindrome II
+difficulty: Easy
+matchmode: exact
+function: valid_palindrome_ii
+arguments:
+- name: s
+  type: str
+return_type: bool
+examples: 3
+condition: |-
+  <p>Given a string <code>s</code>, return <code>true</code> if the <code>s</code> can be <strong>palindrome</strong> after deleting <strong>at most one</strong> character from it.</p>
+tests:
+- args: [aba]
+  output: true
+- args: [abca]
+  output: true
+- args: [abc]
+  output: false
+- args: [deeee]
+  output: true
+- args: [nakdzzddkan]
+  output: true
+- args: [xurxvvxruy]
+  output: false
+- args: [xbxermryyrmrexby]
+  output: false
+- args: [xwxhcmggmchxwy]
+  output: false
+- args: [xwqxwchhcwxqwy]
+  output: false
+- args: [wscuooucysw]
+  output: true
+- args: [ngdhekkehcdgn]
+  output: true
+- args: [xrkltmmtlkry]
+  output: false
+- args: [fttttfh]
+  output: true
+- args: [xfxcywjoojwycxfy]
+  output: false
+- args: [xsqfbiibfqsy]
+  output: false
+- args: [xculsappaslucy]
+  output: false
+- args: [ytpsmyuuympty]
+  output: true
+- args: [cuwujkkkjuwuc]
+  output: true
+- args: [xhpwsmmswphy]
+  output: false
+- args: [babbb]
+  output: true
+- args: [xvtootvy]
+  output: false
+- args: [xhmorlueeulromhy]
+  output: false
+- args: [xmmaammy]
+  output: false
+- args: [skxxkcs]
+  output: true
+- args: [xiagrrgaiy]
+  output: false
+- args: [xiqgsqnccnqsgqiy]
+  output: false
+- args: [xuuperfttfrepuuy]
+  output: false
+- args: [xdfxbeebxfdy]
+  output: false
+- args: [xvjcsksmmskscjvy]
+  output: false
+- args: [xrlchxiixhclry]
+  output: false
+- args: [xbhrnuxxunrhby]
+  output: false
+- args: [yhaahhy]
+  output: true
+- args: [wigwhwqqhwgiw]
+  output: true
+- args: [xhyffyhy]
+  output: false
+- args: [xiucrxeexrcuiy]
+  output: false
+- args: [xidyvbbvydiy]
+  output: false
+- args: [xxeslbblsexy]
+  output: false
+solution: |-
+  def valid_palindrome_ii(s: str) -> bool:
+      def check_palindrome(s, i, j):
+          while i < j:
+              if s[i] != s[j]:
+                  return False
+              i += 1
+              j -= 1
+          return True
+
+      left, right = 0, len(s) - 1
+      while left < right:
+          if s[left] != s[right]:
+              return check_palindrome(s, left + 1, right) or check_palindrome(s, left, right - 1)
+          left += 1
+          right -= 1
+
+      return True

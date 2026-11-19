@@ -1,0 +1,54 @@
+id: 200
+title: Number of Islands
+difficulty: Medium
+matchmode: exact
+function: num_islands
+arguments:
+- name: grid
+  type: List[List[str]]
+return_type: int
+examples: 2
+condition: |-
+  <p>Given an <code>m x n</code> 2D binary grid <code>grid</code> which represents a map of <code>'1'</code>s (land) and <code>'0'</code>s (water), return <em>the number of islands</em>.</p>
+  <p>An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</p>
+tests:
+- args: [[['1', '1', '1', '1', '0'], ['1', '1', '0', '1', '0'], ['1', '1', '0', '0', '0'], ['0', '0', '0', '0', '0']]]
+  output: 1
+- args: [[['1', '1', '0', '0', '0'], ['1', '1', '0', '0', '0'], ['0', '0', '1', '0', '0'], ['0', '0', '0', '1', '1']]]
+  output: 3
+- args: [[['1', '1', '1'], ['0', '0', '0'], ['1', '1', '1']]]
+  output: 2
+- args: [[['1']]]
+  output: 1
+- args: [[['0']]]
+  output: 0
+- args: [[['1', '0', '1'], ['0', '0', '0'], ['1', '0', '1']]]
+  output: 4
+- args: [[['1', '1', '1', '1', '1'], ['1', '1', '1', '1', '1'], ['1', '1', '1', '1', '1']]]
+  output: 1
+- args: [[['1', '0', '0', '0', '0'], ['0', '1', '0', '0', '0'], ['0', '0', '1', '0', '0'], ['0', '0', '0', '1', '0'], ['0', '0', '0', '0', '1']]]
+  output: 5
+- args: [[['1', '1', '0', '0', '1'], ['1', '0', '0', '0', '1'], ['0', '0', '1', '1', '0'], ['0', '0', '1', '1', '0'], ['1', '0', '0', '0', '1']]]
+  output: 5
+- args: [[['0', '0', '0', '0', '0'], ['0', '0', '0', '0', '0'], ['0', '0', '0', '0', '0'], ['0', '0', '0', '0', '0']]]
+  output: 0
+solution: |-
+  def num_islands(grid: List[List[str]]) -> int:
+      count = 0
+      rows, cols = len(grid), len(grid[0])
+
+      for r in range(rows):
+          for c in range(cols):
+              if grid[r][c] != '1':
+                  continue
+              count += 1
+              stack = [(r, c)]
+              grid[r][c] = '0'
+              while stack:
+                  cr, cc = stack.pop()
+                  for nr, nc in ((cr + 1, cc), (cr - 1, cc), (cr, cc + 1), (cr, cc - 1)):
+                      if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == '1':
+                          grid[nr][nc] = '0'
+                          stack.append((nr, nc))
+
+      return count

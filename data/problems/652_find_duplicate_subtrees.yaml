@@ -1,0 +1,108 @@
+id: 652
+title: Find Duplicate Subtrees
+difficulty: Medium
+matchmode: sorted
+function: find_duplicate_subtrees
+arguments:
+- name: root
+  type: Optional[TreeNode]
+return_type: List[Optional[TreeNode]]
+examples: 3
+condition: |-
+  <p>Given the <code>root</code> of a binary tree, return <strong>all duplicate subtrees</strong>.</p>
+  <p>For each kind of duplicate subtrees, you only need to return the root node of <strong>any one</strong> of them.</p>
+  <p>Two trees are duplicate if they have the <strong>same structure</strong> with the <strong>same node values</strong>.</p>
+tests:
+- args: [[1, 2, 3, 4, null, 2, 4, null, null, 4]]
+  output: [[2, 4], [4]]
+- args: [[2, 1, 1]]
+  output: [[1]]
+- args: [[2, 2, 2, 3, null, 3, null]]
+  output: [[2, 3], [3]]
+- args: [[1]]
+  output: []
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1]]
+  output: []
+- args: [[1, 2, 2, 3, null, null, 3]]
+  output: [[3]]
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1]]
+  output: []
+- args: [[1, 2, 2, 3, null, null, 3]]
+  output: [[3]]
+- args: [[1]]
+  output: []
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1]]
+  output: []
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1]]
+  output: []
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1, 2, 2, 3, null, null, 3]]
+  output: [[3]]
+- args: [[1, 2, 2, 3, null, null, 3]]
+  output: [[3]]
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1]]
+  output: []
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1]]
+  output: []
+- args: [[1, 2, 2, 3, null, null, 3]]
+  output: [[3]]
+- args: [[1]]
+  output: []
+- args: [[1, 2, 2, 3, null, null, 3]]
+  output: [[3]]
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1]]
+  output: []
+- args: [[1]]
+  output: []
+- args: [[1]]
+  output: []
+- args: [[1, 2, 3, 4, null, 5, 6]]
+  output: []
+- args: [[1]]
+  output: []
+- args: [[1, 2, 2, 3, null, null, 3]]
+  output: [[3]]
+solution: |-
+  def find_duplicate_subtrees(root: Optional[TreeNode]) -> List[Optional[TreeNode]]:
+      from collections import defaultdict
+
+      counts = defaultdict(int)
+      res = []
+
+      def traverse(node):
+          if not node:
+              return "#"
+
+          struct = f"{node.val},{traverse(node.left)},{traverse(node.right)}"
+          counts[struct] += 1
+
+          if counts[struct] == 2:
+              res.append(node)
+
+          return struct
+
+      traverse(root)
+      return res

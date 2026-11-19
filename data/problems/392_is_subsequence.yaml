@@ -1,0 +1,98 @@
+id: 392
+title: Is Subsequence
+difficulty: Easy
+matchmode: exact
+function: is_subsequence
+arguments:
+- name: s
+  type: str
+- name: t
+  type: str
+return_type: bool
+examples: 2
+condition: |-
+  <p>Given two strings <code>s</code> and <code>t</code>, return <code>true</code> if <code>s</code> is a <strong>subsequence</strong> of <code>t</code>, or <code>false</code> otherwise.</p>
+  <p>A <strong>subsequence</strong> of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters.</p>
+tests:
+- args: [abc, ahbgdc]
+  output: true
+- args: [axc, ahbgdc]
+  output: false
+- args: ['', ahbgdc]
+  output: true
+- args: [abc, abc]
+  output: true
+- args: [ll, yphttubufsll]
+  output: true
+- args: [haxy, hamttttdxgjsyydagrwdvzgytd]
+  output: true
+- args: [r, xflwmlyqfdfysjpbr]
+  output: true
+- args: [xg, aansfixuybaqxewcbkgrgkpj]
+  output: true
+- args: [foj, fochrbfgeouocsefwpmtkwozmji]
+  output: true
+- args: [cu, owxlvkidmcu]
+  output: true
+- args: [e, rqvoztkfnysmaijdoepj]
+  output: true
+- args: [jnlgn, wjnkbcllzcoglalbngj]
+  output: true
+- args: [vnb, vjnlprkifknrxhkgvtbouywiswp]
+  output: true
+- args: [g, jtbdlwgdgvacypeupauptbqm]
+  output: true
+- args: [wi, xqwrgzygwenit]
+  output: true
+- args: [gjle, znivyrbwgsjflgseghozecbu]
+  output: true
+- args: [twy, tcresmmslnnmjwucyjlzdyexyze]
+  output: true
+- args: [mxlmx, nnacmmxlfmaszlxj]
+  output: true
+- args: [qtngc, acdgecqqituuixngfcn]
+  output: true
+- args: [gemgx, gqsfieeumxtlflgsxpwab]
+  output: true
+- args: [gsd, pgfsmsdvacvkbcauumiy]
+  output: true
+- args: [vtd, vrggtxtvxmalmhd]
+  output: true
+- args: [qxt, begdqlhxtcppdsl]
+  output: true
+- args: [x, ddgvdefqxnilmyouzfxsetli]
+  output: true
+- args: [qg, hvudyqqyjtntgtzkwdkxf]
+  output: true
+- args: [totj, dnnicxjtsnqilotjzzho]
+  output: true
+- args: [tjxwf, zftwcugnowwtvzujcqljnxxwjdfcbl]
+  output: true
+- args: [u, oiufzngpkllxfsd]
+  output: true
+- args: [rmccm, jgcoiyalvvremcctvamy]
+  output: true
+- args: [ongb, vwtofongnmbbhye]
+  output: true
+- args: [hriz, yzmhrhkppllepxtdyfkcixzczwoqqy]
+  output: true
+- args: [jtvo, glvjjygrhtaveownmfp]
+  output: true
+- args: [n, rdkowdnuglvw]
+  output: true
+- args: [xbz, xehdbxihuzhsqxw]
+  output: true
+- args: [dgrke, dgfgjzrkfjgcel]
+  output: true
+- args: [z, tbhwcsorvnjqmluzbyxgllli]
+  output: true
+- args: [ppwpm, mpkgpawexupm]
+  output: true
+solution: |-
+  def is_subsequence(s: str, t: str) -> bool:
+      i, j = 0, 0
+      while i < len(s) and j < len(t):
+          if s[i] == t[j]:
+              i += 1
+          j += 1
+      return i == len(s)

@@ -121,3 +121,11 @@ tests:
   output: [15, 25]
 - args: [[-587, -416, -248, -348, -724, -591, 409, -926, -642, -278, -489, -631, 454, 340, 249, -635, -264, -740, -446, -985, 76, -987, 94, 479, -379, -888, 260, -630, 100, -540, 903, -759], -508]
   output: [21, 23]
+solution: |-
+  def two_sum(nums: List[int], target: int) -> List[int]:
+      d = {}
+      for i, n in enumerate(nums):
+          t = target - n
+          if t in d:
+              return [d[t], i]
+          d[n] = i

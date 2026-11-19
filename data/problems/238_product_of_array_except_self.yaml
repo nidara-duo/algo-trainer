@@ -1,0 +1,101 @@
+id: 238
+title: Product of Array Except Self
+difficulty: Medium
+matchmode: exact
+function: product_except_self
+arguments:
+- name: nums
+  type: List[int]
+return_type: List[int]
+examples: 3
+condition: |-
+  <p>Given an integer array <code>nums</code>, return <em>an array</em> <code>answer</code> <em>such that</em> <code>answer[i]</code> <em>is equal to the product of all the elements in</em> <code>nums</code> <em>except</em> <code>nums[i]</code>.</p>
+tests:
+- args: [[1, 2, 3, 4]]
+  output: [24, 12, 8, 6]
+- args: [[-1, 1, 0, -3, 3]]
+  output: [0, 0, 9, 0, 0]
+- args: [[1, 2, 3, 4, 5]]
+  output: [120, 60, 40, 30, 24]
+- args: [[-8, -3, 2, -8, -10, 3, -7]]
+  output: [10080, 26880, -40320, 10080, 8064, -26880, 11520]
+- args: [[-10, 3, -8, 2, 8]]
+  output: [-384, 1280, -480, 1920, 480]
+- args: [[-8, 9, 2]]
+  output: [18, -16, -72]
+- args: [[4, 5, -10, 8, -8, -2]]
+  output: [-6400, -5120, 2560, -3200, 3200, 12800]
+- args: [[-9, -10, -4]]
+  output: [40, 36, 90]
+- args: [[-5, 3, 5, 1, -3]]
+  output: [-45, 75, 45, 225, -75]
+- args: [[6, 4, -7, -5, 0, 2, -6, 8]]
+  output: [0, 0, 0, 0, -80640, 0, 0, 0]
+- args: [[2, 3, -1, 5, -7, -7, -9]]
+  output: [6615, 4410, -13230, 2646, -1890, -1890, -1470]
+- args: [[-4, 7]]
+  output: [7, -4]
+- args: [[-1, -7]]
+  output: [-7, -1]
+- args: [[9, 8, -2, -1, 3, -6, 8, -3, 9, 6]]
+  output: [373248, 419904, -1679616, -3359232, 1119744, -559872, 419904, -1119744, 373248, 559872]
+- args: [[5, -4, -1, 10, 4, -1, 0, -1]]
+  output: [0, 0, 0, 0, 0, 0, 800, 0]
+- args: [[-3, 5, 8]]
+  output: [40, -24, -15]
+- args: [[1, -7, -6, -8, -7, -9, -7]]
+  output: [148176, -21168, -24696, -18522, -21168, -16464, -21168]
+- args: [[3, -6, 6, -9, -9]]
+  output: [-2916, 1458, -1458, 972, 972]
+- args: [[0, 6]]
+  output: [6, 0]
+- args: [[-1, 1, -6, -6, 10, -6, 4, 0, 4, 8]]
+  output: [0, 0, 0, 0, 0, 0, 0, 276480, 0, 0]
+- args: [[-2, 4, -1, -6]]
+  output: [24, -12, 48, 8]
+- args: [[8, -7, 7, -8, 3, -2]]
+  output: [-2352, 2688, -2688, 2352, -6272, 9408]
+- args: [[9, -5, 3, 0, 10, 4]]
+  output: [0, 0, 0, -5400, 0, 0]
+- args: [[8, 5, 9, 4]]
+  output: [180, 288, 160, 360]
+- args: [[-9, -8, -3, 8, 6, -6, 0, 10]]
+  output: [0, 0, 0, 0, 0, 0, 622080, 0]
+- args: [[-10, -7]]
+  output: [-7, -10]
+- args: [[-7, 7, 4, 2, -5]]
+  output: [-280, 280, 490, 980, -392]
+- args: [[10, 9, 9, 7, -2, 0]]
+  output: [0, 0, 0, 0, 0, -11340]
+- args: [[8, -7, 7]]
+  output: [-49, 56, -56]
+- args: [[10, -4, -1, 10, -7]]
+  output: [-280, 700, 2800, -280, 400]
+- args: [[6, -5, -7, -5, 8, -4, -8]]
+  output: [-44800, 53760, 38400, 53760, -33600, 67200, 33600]
+- args: [[4, 9]]
+  output: [9, 4]
+- args: [[10, -2, -8, -5, -6, 3, -8, -6]]
+  output: [69120, -345600, -86400, -138240, -115200, 230400, -86400, -115200]
+- args: [[3, 10, -8, -4]]
+  output: [320, 96, -120, -240]
+- args: [[-10, 4, 9, 0, 3, 2, -7, 0]]
+  output: [0, 0, 0, 0, 0, 0, 0, 0]
+- args: [[7, -1, 7]]
+  output: [-7, 49, -7]
+solution: |-
+  def product_except_self(nums: List[int]) -> List[int]:
+      n = len(nums)
+      ans = [1] * n
+
+      left_prod = 1
+      for i in range(n):
+          ans[i] = left_prod
+          left_prod *= nums[i]
+
+      right_prod = 1
+      for i in range(n - 1, -1, -1):
+          ans[i] *= right_prod
+          right_prod *= nums[i]
+
+      return ans

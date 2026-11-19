@@ -1,0 +1,109 @@
+id: 443
+title: String Compression
+difficulty: Medium
+matchmode: exact
+function: compress
+arguments:
+- name: chars
+  type: List[str]
+return_type: int
+examples: 3
+condition: |-
+  <p>Given an array of characters <code>chars</code>, compress it using the following algorithm: Begin with an empty string. For each group of consecutive repeating characters in <code>chars</code>, append the character followed by the count (if greater than 1).</p>
+tests:
+- args: [[a, a, b, b, c, c, c]]
+  output: 6
+- args: [[a]]
+  output: 1
+- args: [[a, b, b, b, b, b, b, b, b, b, b, b, b]]
+  output: 4
+- args: [[a, a, a, b, b, c, c, c]]
+  output: 6
+- args: [[e, e, e, r, r, r, r, r, w, w, w, w, w, s, s, s, s, s, z, z, z]]
+  output: 10
+- args: [[q, g, g, y, y, y, y]]
+  output: 5
+- args: [[h, h, e, e, e]]
+  output: 4
+- args: [[u, u, u, s, s, s]]
+  output: 4
+- args: [[h, h, h, h, h, a, a, a, x, x, x, x, x]]
+  output: 6
+- args: [[h, h, h, r, r, r, r, g, g, g, g, g, i, i, i, i, i, c, c, c]]
+  output: 10
+- args: [[s, s, e, e, e, a, a, d]]
+  output: 7
+- args: [[t, t, k, k, k, k, q, q, q, q, o, o, o, o, o, l, l, l]]
+  output: 10
+- args: [[c, s, s, s, s]]
+  output: 3
+- args: [[j, j, j, j, j, r, r, r, r]]
+  output: 4
+- args: [[a, a, x, x, x, x]]
+  output: 4
+- args: [[w, w, v, v, v, v, n, n, n, n, i, i, k, k, k, k]]
+  output: 10
+- args: [[i, i, i, i, i, m, v, v, v, v, v, u, u, u, f, f, f, f]]
+  output: 9
+- args: [[a, a, a, a, a, p, p, v]]
+  output: 5
+- args: [[j, j, j, p, p, p]]
+  output: 4
+- args: [[u, u, u, q, q, q, q, q, b, b, b, h, h, h, h, i, i, i, i]]
+  output: 10
+- args: [[y, y, y, c, c, c, c, c, y, y, y, y, y, m, m, m]]
+  output: 8
+- args: [[n, n, n, n, b, b, m, z, z, z]]
+  output: 7
+- args: [[h, h, h, h, h, c]]
+  output: 3
+- args: [[b, b, b, i, i, i, i, g, g, g, g]]
+  output: 6
+- args: [[u, u, u, u, u, h, h, i, f, f, f]]
+  output: 7
+- args: [[t, t, d, d, d, d, d]]
+  output: 4
+- args: [[z, z, z, z, z, m, m, m]]
+  output: 4
+- args: [[i, g, g, g, w, w, w, w, w, p, s, s, s, s, s]]
+  output: 8
+- args: [[t, t, q, q, g, g, g, g, g, k, k, k, k]]
+  output: 8
+- args: [[z, z, z, z, z, d, d, d, b, b, o, o, o, h]]
+  output: 9
+- args: [[o, o, o, o, t, v, v]]
+  output: 5
+- args: [[i, i, s, s, s, j, j, y, y]]
+  output: 8
+- args: [[v, t, t, t, t, y, y, y]]
+  output: 5
+- args: [[s, s, k, k, k, k, q, q, q, q, q]]
+  output: 6
+- args: [[o, o, o, o, o, z, z, x, x, q, q, q, q, q, z, z]]
+  output: 10
+- args: [[s, f, f, f, j, j, j, d, d, d, o]]
+  output: 8
+- args: [[c, c, c, c, o, j, j, j, s, s]]
+  output: 7
+solution: |-
+  def compress(chars: List[str]) -> int:
+      write = 0
+      read = 0
+
+      while read < len(chars):
+          char = chars[read]
+          count = 0
+
+          while read < len(chars) and chars[read] == char:
+              read += 1
+              count += 1
+
+          chars[write] = char
+          write += 1
+
+          if count > 1:
+              for digit in str(count):
+                  chars[write] = digit
+                  write += 1
+
+      return write
